@@ -5,13 +5,15 @@ export default class Spawner extends GameObjectClass {
   #spawned = 0;
 
   constructor(properties: any) {
-    const { spawnEvery, factory, scene, elapsed, spawnMax } = properties;
+    const { spawnEvery, factory, scene, elapsed, spawnMax, direction } =
+      properties;
     super(properties);
     this.spawnEvery = spawnEvery;
     this.elapsed = elapsed || 0;
     this.factory = factory;
     this.scene = scene;
     this.spawnMax = spawnMax || 0;
+    this.direction = direction == null ? 0.5 : direction;
   }
   update() {
     if (this.spawnMax !== 0 && this.#spawned >= this.spawnMax) {

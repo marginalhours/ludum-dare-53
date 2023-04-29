@@ -39,6 +39,7 @@ export default class PostmanSprite extends SpriteClass {
   init(props: any) {
     super.init({ ...props, animations: spriteSheet.animations });
     this.anchor.x = 0.5;
+    this.direction = props.direction == null ? 0 : props.direction; // 0 = left, 1 = right
     this.setScale(PostmanSprite.SCALE_X, PostmanSprite.SCALE_Y);
     this.changeState(PostmanState.FALLING);
   }
@@ -60,6 +61,7 @@ export default class PostmanSprite extends SpriteClass {
         this.dy = 0;
         this.setScale(PostmanSprite.SCALE_X, PostmanSprite.SCALE_Y);
         this.playAnimation("walking");
+        this.direction = 0;
         break;
       case PostmanState.WALKING_RIGHT:
         // this.y = this.y - (this.y % TILE_SIZE) + 1;
@@ -68,6 +70,7 @@ export default class PostmanSprite extends SpriteClass {
         this.dy = 0;
         this.setScale(-1 * PostmanSprite.SCALE_X, PostmanSprite.SCALE_Y);
         this.playAnimation("walking");
+        this.direction = 1;
         break;
     }
 
@@ -102,7 +105,7 @@ export default class PostmanSprite extends SpriteClass {
     if (this.isCollidingWithWorld()) {
       if (this.state == PostmanState.FALLING) {
         this.changeState(
-          Math.random() < 0.5
+          this.direction === 0
             ? PostmanState.WALKING_LEFT
             : PostmanState.WALKING_RIGHT
         );

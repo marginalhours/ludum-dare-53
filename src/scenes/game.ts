@@ -54,28 +54,54 @@ const gameScene = kontra.Scene({
     const tileEngine = kontra.TileEngine(tilesetJson);
     this.add(tileEngine);
 
+    function getRandomDirection(spawnerDirection: number): number {
+      if (spawnerDirection === 0) {
+        return 0;
+      }
+
+      if (spawnerDirection === 1) {
+        return 1;
+      }
+
+      return Math.random() < spawnerDirection ? 0 : 1;
+    }
+
     const postmanFactory = (sp: Spawner) => {
       let man = new PostmanSprite({
         x: sp.x,
-        y: 0,
+        y: sp.y,
         ddy: 0.1,
         tiles: tileEngine,
+        direction: getRandomDirection(sp.direction),
       });
 
       return [man];
     };
 
-    const spawner = new Spawner({
+    const leftSpawner = new Spawner({
       spawnEvery: 120, // 60 frames is 1 second
       elapsed: 120,
       factory: postmanFactory,
       scene: gameScene,
-      x: 120,
-      y: 32,
-      spawnMax: 0,
+      x: 5.5 * 32,
+      y: 1 * 32,
+      //spawnMax: 0,
+      direction: 1,
     });
 
-    this.add(spawner);
+    const rightSpawner = new Spawner({
+      spawnEvery: 120, // 60 frames is 1 second
+      elapsed: 120,
+      factory: postmanFactory,
+      scene: gameScene,
+      x: 11.5 * 32,
+      y: 1 * 32,
+      //spawnMax: 1,
+      direction: 0,
+    });
+
+    this.add(leftSpawner);
+    this.add(rightSpawner);
   },
   onHide() {
     this.remove(...men);
