@@ -22,8 +22,12 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
     frameWidth: 16,
     frameHeight: 16,
     animations: {
+      falling: {
+        frames: "0..1",
+        frameRate: 4,
+      },
       walking: {
-        frames: "0..7",
+        frames: "2..9",
         frameRate: 12,
       },
     },
@@ -33,7 +37,7 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
 const canvas = kontra.getCanvas();
 
 export default class PostmanSprite extends SpriteClass {
-  static SCALE_X = 1;
+  static SCALE_X = 2;
   static SCALE_Y = this.SCALE_X;
 
   init(props: any) {
@@ -42,6 +46,7 @@ export default class PostmanSprite extends SpriteClass {
       animations: spriteSheet.animations,
     });
     this.anchor.x = 0.5;
+    this.anchor.y = 1;
     this.direction = props.direction == null ? 0 : props.direction; // 0 = left, 1 = right
     this.setScale(PostmanSprite.SCALE_X, PostmanSprite.SCALE_Y);
     this.changeState(PostmanState.FALLING);
@@ -60,9 +65,10 @@ export default class PostmanSprite extends SpriteClass {
       case PostmanState.FALLING:
         this.ddy = 0.1;
         this.dx = 0;
+        this.playAnimation("falling");
         break;
       case PostmanState.WALKING_LEFT:
-        this.y = this.y - ((this.y + this.height) % TILE_SIZE);
+        this.y = this.y - (this.y % TILE_SIZE);
         this.dx = -1;
         this.ddy = 0;
         this.dy = 0;
@@ -71,7 +77,7 @@ export default class PostmanSprite extends SpriteClass {
         this.direction = 0;
         break;
       case PostmanState.WALKING_RIGHT:
-        this.y = this.y - ((this.y + this.height) % TILE_SIZE);
+        this.y = this.y - (this.y % TILE_SIZE);
         this.dx = 1;
         this.ddy = 0;
         this.dy = 0;
@@ -85,15 +91,7 @@ export default class PostmanSprite extends SpriteClass {
   }
 
   isCollidingWithWorld() {
-    const positionAtBase = {
-      x: this.x + this.width / 2,
-      y: this.y + this.height,
-    };
-
-    const tileAtBase = (this.tiles as TileEngine).tileAtLayer(
-      "world",
-      positionAtBase
-    );
+    const tileAtBase = (this.tiles as TileEngine).tileAtLayer("world", this);
 
     if (tileAtBase !== 0) {
       return true;

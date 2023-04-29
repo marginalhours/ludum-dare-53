@@ -12,7 +12,7 @@ export default class Spawner extends GameObjectClass {
     this.elapsed = elapsed || 0;
     this.factory = factory;
     this.scene = scene;
-    this.spawnMax = spawnMax || 0;
+    this.spawnMax = spawnMax || 1;
     this.direction = direction == null ? 0.5 : direction;
   }
   update() {
