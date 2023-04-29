@@ -1,10 +1,9 @@
 import kontra from "kontra";
 import { EventType } from "../constants";
-const { Button, SpriteSheet, SpriteClass, imageAssets } = kontra;
+const { Button } = kontra;
 const canvas = kontra.getCanvas();
 import { SceneID } from "./constants";
 
-import { playSound, SoundType } from "../soundManager";
 import PostmanSprite from "../entities/postman";
 import PlatformSprite from "../entities/platform";
 
