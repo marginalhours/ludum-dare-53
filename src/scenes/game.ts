@@ -3,6 +3,7 @@ import { EventType } from "../constants";
 const { Button, SpriteSheet, SpriteClass, imageAssets } = kontra;
 const canvas = kontra.getCanvas();
 import { SceneID } from "./constants";
+import tilesetJson from "./../assets/data/tileset.json";
 
 import { playSound, SoundType } from "../soundManager";
 
@@ -92,35 +93,9 @@ const gameScene = kontra.Scene({
     this.add(...men);
 
     // Add tile engine
-    const tileEngine = kontra.TileEngine({
-      height: 9,
-      width: 9,
-      tilewidth: 64,
-      tileheight: 64,
-      tilesets: [
-        {
-          firstgid: 1,
-          image: imageAssets[tileset],
-        },
-      ],
-      layers: [
-        {
-          name: "ground",
-          // prettier-ignore
-          data: [
-            0,  0,  0,  0,  0,  0,  0,  6,  8,
-            0,  0,  6,  7,  7,  8,  0,  40,  42,
-            0,  6,  27, 24, 24, 25, 0,  0,  0,
-            0,  23, 24, 24, 24, 26, 8,  0,  0,
-            0,  23, 24, 24, 24, 24, 26, 8,  0,
-            0,  23, 24, 24, 24, 24, 24, 25, 0,
-            0,  40, 41, 41, 10, 24, 24, 25, 0,
-            0,  0,  0,  0,  40, 41, 41, 42, 0,
-            0,  0,  0,  0,  0,  0,  0,  0,  0
-          ],
-        },
-      ],
-    });
+    (tilesetJson as any).tilesets[0].source = null;
+    (tilesetJson as any).tilesets[0].image = tileset;
+    const tileEngine = kontra.TileEngine(tilesetJson);
     this.add(tileEngine);
   },
   onHide() {
