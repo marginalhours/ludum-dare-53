@@ -37,10 +37,17 @@ export default class PostmanSprite extends SpriteClass {
   static SCALE_Y = 1.5;
 
   init(props: any) {
-    super.init({ ...props, animations: spriteSheet.animations });
+    super.init({
+      ...props,
+      animations: spriteSheet.animations,
+    });
     this.anchor.x = 0.5;
     this.setScale(PostmanSprite.SCALE_X, PostmanSprite.SCALE_Y);
     this.changeState(PostmanState.FALLING);
+  }
+
+  onDown() {
+    this.murder();
   }
 
   changeState(nextState: PostmanState) {
@@ -55,7 +62,7 @@ export default class PostmanSprite extends SpriteClass {
         break;
       case PostmanState.WALKING_LEFT:
         // this.y = this.y - (this.y % TILE_SIZE) + 1;
-        this.dx = -1;
+        this.dx = -0.01;
         this.ddy = 0;
         this.dy = 0;
         this.setScale(PostmanSprite.SCALE_X, PostmanSprite.SCALE_Y);
