@@ -1,4 +1,4 @@
-import kontra from "kontra";
+import kontra, { TileEngine } from "kontra";
 import { EventType } from "../constants";
 const canvas = kontra.getCanvas();
 import { SceneID } from "./constants";
@@ -7,7 +7,7 @@ import tilesetSrc from "./../assets/images/tileset.png";
 // Not using Kontra's asset loading here because Vite inlines the JSON.
 import tilesetJson from "./../assets/data/tileset.json";
 
-import PostmanSprite from "../entities/postman";
+import PostmanSprite, { gibPostman } from "../entities/postman";
 import Spawner from "../entities/spawner";
 import { GibPool } from "../entities/gib";
 
@@ -45,6 +45,29 @@ kontra.track(winButton);
 
 let men: PostmanSprite[] = [];
 
+const getRandomDirection = (spawnerDirection: number): number => {
+  if ([0, 1].includes(spawnerDirection)) {
+    return spawnerDirection;
+  }
+  return Math.random() < spawnerDirection ? 0 : 1;
+};
+
+const postmanFactory = (sp: Spawner, tiles: TileEngine) => {
+  let man = new PostmanSprite({
+    x: sp.x,
+    y: sp.y,
+    ddy: 0.1,
+    tiles,
+    direction: getRandomDirection(sp.direction),
+    murder: () => {
+      gibPostman(man, tiles);
+      sp.scene.remove(man);
+    },
+  });
+  kontra.track(man);
+  return [man];
+};
+
 const gameScene = kontra.Scene({
   id: SceneID.GAME,
   onShow() {
@@ -57,60 +80,10 @@ const gameScene = kontra.Scene({
     const tileEngine = kontra.TileEngine(tilesetJson);
     this.add(tileEngine);
 
-    function getRandomDirection(spawnerDirection: number): number {
-      if (spawnerDirection === 0) {
-        return 0;
-      }
-
-      if (spawnerDirection === 1) {
-        return 1;
-      }
-
-      return Math.random() < spawnerDirection ? 0 : 1;
-    }
-
-    const gibFactory = (man: PostmanSprite) => {
-      const gibCount = 48;
-      return Array.from(Array(gibCount).keys())
-        .map((_) => {
-          const arcSize = Math.PI;
-          const heading = Math.PI + (0.5 * arcSize - arcSize * Math.random());
-          const speed = 1 + 2.5 * Math.random();
-
-          const gib = GibPool.get({
-            x: man.x,
-            y: man.y,
-            heading: heading,
-            speed: speed,
-            tiles: tileEngine,
-            ttl: 150,
-          });
-
-          return gib;
-        })
-        .filter((gib) => gib !== undefined);
-    };
-
-    const postmanFactory = (sp: Spawner) => {
-      let man = new PostmanSprite({
-        x: sp.x,
-        y: sp.y,
-        ddy: 0.1,
-        tiles: tileEngine,
-        direction: getRandomDirection(sp.direction),
-        murder: () => {
-          gibFactory(man);
-          gameScene.remove(man);
-        },
-      });
-      kontra.track(man);
-      return [man];
-    };
-
     const leftSpawner = new Spawner({
       spawnEvery: 120, // 60 frames is 1 second
       elapsed: 120,
-      factory: postmanFactory,
+      factory: (sp: Spawner) => postmanFactory(sp, tileEngine),
       scene: gameScene,
       x: 4.5 * 32,
       y: 1 * 32,
@@ -121,7 +94,7 @@ const gameScene = kontra.Scene({
     const rightSpawner = new Spawner({
       spawnEvery: 120, // 60 frames is 1 second
       elapsed: 120,
-      factory: postmanFactory,
+      factory: (sp: Spawner) => postmanFactory(sp, tileEngine),
       scene: gameScene,
       x: 11.5 * 32,
       y: 1 * 32,

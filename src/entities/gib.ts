@@ -16,6 +16,7 @@ export default class GibSprite extends SpriteClass {
     this.tiles = tiles;
     this.state = GibState.FLYING;
 
+    // TODO: If you gib a good postie, he should have a different palette
     const gibColours = ["#e53b44", "#e4a672", "#ffe762", "#4f6781"];
 
     super.init({
