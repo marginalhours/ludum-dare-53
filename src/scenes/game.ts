@@ -1,6 +1,5 @@
 import kontra from "kontra";
 import { EventType } from "../constants";
-const { Button, SpriteSheet, SpriteClass, imageAssets } = kontra;
 const canvas = kontra.getCanvas();
 import { SceneID } from "./constants";
 
@@ -8,11 +7,10 @@ import tilesetSrc from "./../assets/images/tileset.png";
 // Not using Kontra's asset loading here because Vite inlines the JSON.
 import tilesetJson from "./../assets/data/tileset.json";
 
-import { playSound, SoundType } from "../soundManager";
 import PostmanSprite from "../entities/postman";
 import PlatformSprite from "../entities/platform";
 
-let winButton = Button({
+let winButton = kontra.Button({
   text: {
     color: "red",
     font: "16px monospace",
@@ -73,7 +71,7 @@ const gameScene = kontra.Scene({
 
     // Add tile engine
     (tilesetJson as any).tilesets[0].source = null;
-    (tilesetJson as any).tilesets[0].image = imageAssets[tilesetSrc];
+    (tilesetJson as any).tilesets[0].image = kontra.imageAssets[tilesetSrc];
     const tileEngine = kontra.TileEngine(tilesetJson);
     this.add(tileEngine);
   },
