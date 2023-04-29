@@ -2,22 +2,23 @@
  * This file stitches together the howlerjs and kontra loading systems
  * to handle audio and image loading respectively
  */
-import kontra from 'kontra';
-import { Howl } from 'howler';
-import { registerSound, SoundType } from './soundManager';
-import { EventType } from './constants';
+import kontra from "kontra";
+import { Howl } from "howler";
+import { registerSound, SoundType } from "./soundManager";
+import { EventType } from "./constants";
 
 // Audio imports
-import boingSrc from './assets/sounds/boing.ogg';
+import boingSrc from "./assets/sounds/boing.ogg";
 
 // Image imports
-import walkerSrc from './assets/images/walker.png';
+import walkerSrc from "./assets/images/walker.png";
+import ghostieSrc from "./assets/images/ghostie.png";
 
 // Audio
 const audioFiles = [[SoundType.BOING, boingSrc]];
 
 // Images
-const imageFiles = [walkerSrc];
+const imageFiles = [walkerSrc, ghostieSrc];
 
 // Percentage tracking
 const assetsToLoadCount = audioFiles.length + imageFiles.length;
@@ -52,7 +53,7 @@ export const startAssetLoading = () => {
         loop: false,
         rate: 1.0,
         volume: 0.25,
-        onload: () => loadingProgressCallback('sound', source),
+        onload: () => loadingProgressCallback("sound", source),
       })
     );
   });

@@ -1,7 +1,7 @@
-import { Scene } from 'kontra';
+import { Scene } from "kontra";
 
-import menuScene from './menu';
-import gameScene from './game';
+import menuScene from "./menu";
+import gameScene from "./game";
 // Array of all the scenes
 const sceneArray: Scene[] = [menuScene, gameScene];
 
