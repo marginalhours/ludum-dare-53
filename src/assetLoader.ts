@@ -11,16 +11,16 @@ import { EventType } from "./constants";
 import boingSrc from "./assets/sounds/boing.ogg";
 
 // Image imports
-import walkerSrc from "./assets/images/walker.png";
-import ghostieSrc from "./assets/images/ghostie.png";
 import tilesetSrc from "./assets/images/tileset.png";
 import postieSrc from "./assets/images/postie.png";
+import goodPostieSrc from "./assets/images/good-postie.png";
+import spikesSrc from "./assets/images/spikes.png";
 
 // Audio
 const audioFiles = [[SoundType.BOING, boingSrc]];
 
 // Images
-const imageFiles = [walkerSrc, ghostieSrc, tilesetSrc, postieSrc];
+const imageFiles = [tilesetSrc, postieSrc, goodPostieSrc, spikesSrc];
 
 // Percentage tracking
 const assetsToLoadCount = audioFiles.length + imageFiles.length;
