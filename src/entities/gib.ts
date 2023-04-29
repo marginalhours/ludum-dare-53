@@ -14,7 +14,7 @@ export default class GibSprite extends SpriteClass {
     const dx = speed * Math.sin(heading);
     const ddy = 0.15;
     this.tiles = tiles;
-    this.gibState = GibState.FLYING;
+    this.state = GibState.FLYING;
 
     const gibColours = ["#e53b44", "#e4a672", "#ffe762", "#4f6781"];
 
