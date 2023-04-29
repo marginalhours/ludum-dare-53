@@ -1,11 +1,13 @@
-import kontra from "kontra";
-const { SpriteSheet, imageAssets, SpriteClass, collides } = kontra;
+import kontra, { TileEngine } from "kontra";
+const { SpriteSheet, imageAssets, SpriteClass } = kontra;
 
 import { EventType } from "../constants";
 
 import ghostie from "../assets/images/ghostie.png";
 
 let spriteSheet: any;
+
+const TILE_SIZE = 32;
 
 enum PostmanState {
   FALLING = "falling",
@@ -51,12 +53,14 @@ export default class PostmanSprite extends SpriteClass {
         this.dx = 0;
         break;
       case PostmanState.WALKING_LEFT:
+        // this.y = this.y - (this.y % TILE_SIZE) + 1;
         this.dx = -1;
         this.ddy = 0;
         this.dy = 0;
         this.playAnimation("left");
         break;
       case PostmanState.WALKING_RIGHT:
+        // this.y = this.y - (this.y % TILE_SIZE) + 1;
         this.dx = 1;
         this.ddy = 0;
         this.dy = 0;
@@ -67,6 +71,24 @@ export default class PostmanSprite extends SpriteClass {
     this.state = nextState;
   }
 
+  isCollidingWithWorld() {
+    const positionAtBase = {
+      x: this.x + this.width / 2,
+      y: this.y + this.height,
+    };
+
+    const tileAtBase = (this.tiles as TileEngine).tileAtLayer(
+      "world",
+      positionAtBase
+    );
+
+    if (tileAtBase !== 0) {
+      return true;
+    }
+
+    return false;
+  }
+
   update() {
     super.update();
 
@@ -74,9 +96,7 @@ export default class PostmanSprite extends SpriteClass {
       this.x = (this.x + canvas.width) % canvas.width;
     }
 
-    if (
-      (this.platforms as any[]).some((platform) => collides(platform, this))
-    ) {
+    if (this.isCollidingWithWorld()) {
       if (this.state == PostmanState.FALLING) {
         this.changeState(
           Math.random() < 0.5

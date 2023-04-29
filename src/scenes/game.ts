@@ -8,7 +8,6 @@ import tilesetSrc from "./../assets/images/tileset.png";
 import tilesetJson from "./../assets/data/tileset.json";
 
 import PostmanSprite from "../entities/postman";
-import PlatformSprite from "../entities/platform";
 import Spawner from "../entities/spawner";
 
 let winButton = kontra.Button({
@@ -45,46 +44,37 @@ kontra.track(winButton);
 
 let men: PostmanSprite[] = [];
 
-const platforms = Array.from(Array(5).keys()).map((idx) => {
-  const width = Math.random() * canvas.width * 0.75;
-  const fraction = 64 + (idx / 5) * canvas.height;
-
-  return new PlatformSprite({
-    x: Math.random() * (canvas.width - width),
-    y: fraction,
-    width: width,
-  });
-});
-
 const gameScene = kontra.Scene({
   id: SceneID.GAME,
   onShow() {
     winButton.focus();
-    const postmanFactory = (sp) => {
+    // Add tile engine
+    (tilesetJson as any).tilesets[0].source = console.log(this.tiles);
+    (tilesetJson as any).tilesets[0].image = kontra.imageAssets[tilesetSrc];
+    const tileEngine = kontra.TileEngine(tilesetJson);
+    this.add(tileEngine);
+
+    const postmanFactory = (sp: Spawner) => {
       let man = new PostmanSprite({
         x: sp.x,
         y: 0,
         ddy: 0.1,
-        platforms: platforms,
+        tiles: tileEngine,
       });
 
       return [man];
     };
 
     const spawner = new Spawner({
-      spawnEvery: 60, // 60 frames is 1 second
+      spawnEvery: 120, // 60 frames is 1 second
+      elapsed: 120,
       factory: postmanFactory,
       scene: gameScene,
-      x: canvas.width / 2,
+      x: 120,
+      y: 32,
     });
 
     this.add(spawner);
-
-    // Add tile engine
-    (tilesetJson as any).tilesets[0].source = null;
-    (tilesetJson as any).tilesets[0].image = kontra.imageAssets[tilesetSrc];
-    const tileEngine = kontra.TileEngine(tilesetJson);
-    this.add(tileEngine);
   },
   onHide() {
     this.remove(...men);
@@ -95,6 +85,5 @@ const gameScene = kontra.Scene({
 });
 
 gameScene.add(winButton);
-gameScene.add(...platforms);
 
 export default gameScene;
