@@ -9,6 +9,7 @@ import tilesetJson from "./../assets/data/tileset.json";
 
 import PostmanSprite from "../entities/postman";
 import PlatformSprite from "../entities/platform";
+import Spawner from "../entities/spawner";
 
 let winButton = kontra.Button({
   text: {
@@ -59,15 +60,25 @@ const gameScene = kontra.Scene({
   id: SceneID.GAME,
   onShow() {
     winButton.focus();
-    setInterval(() => {
+    const postmanFactory = (sp) => {
       let man = new PostmanSprite({
-        x: canvas.width * Math.random(),
+        x: sp.x,
         y: 0,
         ddy: 0.1,
         platforms: platforms,
       });
-      this.add(man);
-    }, 1000);
+
+      return [man];
+    };
+
+    const spawner = new Spawner({
+      spawnEvery: 60, // 60 frames is 1 second
+      factory: postmanFactory,
+      scene: gameScene,
+      x: canvas.width / 2,
+    });
+
+    this.add(spawner);
 
     // Add tile engine
     (tilesetJson as any).tilesets[0].source = null;
