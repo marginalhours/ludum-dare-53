@@ -4,6 +4,7 @@ const { SpriteSheet, imageAssets, SpriteClass } = kontra;
 import { EventType } from "../constants";
 
 import postie from "../assets/images/postie.png";
+import { GibPool } from "./gib";
 
 let spriteSheet: any;
 
@@ -120,3 +121,25 @@ export default class PostmanSprite extends SpriteClass {
     }
   }
 }
+
+export const gibPostman = (man: PostmanSprite, tileEngine: TileEngine) => {
+  const gibCount = 48;
+  return Array.from(Array(gibCount).keys())
+    .map((_) => {
+      const arcSize = Math.PI;
+      const heading = Math.PI + (0.5 * arcSize - arcSize * Math.random());
+      const speed = 1 + 2.5 * Math.random();
+
+      const gib = GibPool.get({
+        x: man.x,
+        y: man.y,
+        heading: heading,
+        speed: speed,
+        tiles: tileEngine,
+        ttl: 150,
+      });
+
+      return gib;
+    })
+    .filter((gib) => gib !== undefined);
+};
