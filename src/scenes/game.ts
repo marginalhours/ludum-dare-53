@@ -72,6 +72,7 @@ const gameScene = kontra.Scene({
       scene: gameScene,
       x: 120,
       y: 32,
+      spawnMax: 0,
     });
 
     this.add(spawner);
