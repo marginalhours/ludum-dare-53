@@ -62,7 +62,7 @@ export default class PostmanSprite extends SpriteClass {
         break;
       case PostmanState.WALKING_LEFT:
         // this.y = this.y - (this.y % TILE_SIZE) + 1;
-        this.dx = -0.01;
+        this.dx = -1;
         this.ddy = 0;
         this.dy = 0;
         this.setScale(PostmanSprite.SCALE_X, PostmanSprite.SCALE_Y);
