@@ -7,7 +7,7 @@ import ghostie from "../assets/images/ghostie.png";
 
 let spriteSheet: any;
 
-const TILE_SIZE = 32;
+// const TILE_SIZE = 32;
 
 enum PostmanState {
   FALLING = "falling",
