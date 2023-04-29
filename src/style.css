@@ -18,7 +18,8 @@
   border: 1px solid #777;
   border-radius: 5px;
   image-rendering: pixelated;
-  max-height: 98vh;
+  max-height: 100vh;
+  max-width: 100vw;
   background-color: #80bde3;
 }
 
