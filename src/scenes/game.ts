@@ -48,7 +48,8 @@ let men: PostmanSprite[] = [];
 const gameScene = kontra.Scene({
   id: SceneID.GAME,
   onShow() {
-    gameScene.add(GibPool);
+    this.add(GibPool);
+
     winButton.focus();
     // Add tile engine
     (tilesetJson as any).tilesets[0].source = null;
@@ -62,7 +63,7 @@ const gameScene = kontra.Scene({
         .map((_) => {
           const arcSize = 0.4;
           const heading = Math.PI + (0.5 * arcSize - arcSize * Math.random());
-          const speed = 1 + 1.5 * Math.random();
+          const speed = 1 + 2.5 * Math.random();
 
           const gib = GibPool.get({
             x: man.x,
@@ -85,8 +86,7 @@ const gameScene = kontra.Scene({
         ddy: 0.1,
         tiles: tileEngine,
         murder: () => {
-          const gibs = gibFactory(man);
-          gameScene.add(...gibs);
+          gibFactory(man);
           gameScene.remove(man);
         },
       });
