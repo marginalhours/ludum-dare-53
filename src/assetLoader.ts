@@ -13,12 +13,13 @@ import boingSrc from "./assets/sounds/boing.ogg";
 // Image imports
 import walkerSrc from "./assets/images/walker.png";
 import ghostieSrc from "./assets/images/ghostie.png";
+import tilesetSrc from "./assets/images/tileset.png";
 
 // Audio
 const audioFiles = [[SoundType.BOING, boingSrc]];
 
 // Images
-const imageFiles = [walkerSrc, ghostieSrc];
+const imageFiles = [walkerSrc, ghostieSrc, tilesetSrc];
 
 // Percentage tracking
 const assetsToLoadCount = audioFiles.length + imageFiles.length;

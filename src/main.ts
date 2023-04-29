@@ -1,9 +1,9 @@
-import './style.css';
+import "./style.css";
 
-import kontra, { Scene, GameLoop } from 'kontra';
-import { allScenes } from './scenes';
-import loadingScene from './scenes/loading';
-import { EventType } from './constants';
+import kontra, { Scene, GameLoop } from "kontra";
+import { allScenes } from "./scenes";
+import loadingScene from "./scenes/loading";
+import { EventType } from "./constants";
 
 // Store the current scene in a global
 let activeScene: Scene = loadingScene;
