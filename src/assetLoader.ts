@@ -15,12 +15,13 @@ import tilesetSrc from "./assets/images/tileset.png";
 import postieSrc from "./assets/images/postie.png";
 import goodPostieSrc from "./assets/images/good-postie.png";
 import spikesSrc from "./assets/images/spikes.png";
+import dogSrc from "./assets/images/dog.png";
 
 // Audio
 const audioFiles = [[SoundType.BOING, boingSrc]];
 
 // Images
-const imageFiles = [tilesetSrc, postieSrc, goodPostieSrc, spikesSrc];
+const imageFiles = [tilesetSrc, postieSrc, goodPostieSrc, spikesSrc, dogSrc];
 
 // Percentage tracking
 const assetsToLoadCount = audioFiles.length + imageFiles.length;
