@@ -7,7 +7,7 @@ import postie from "../assets/images/postie.png";
 
 let spriteSheet: any;
 
-// const TILE_SIZE = 32;
+const TILE_SIZE = 32;
 
 enum PostmanState {
   FALLING = "falling",
@@ -62,7 +62,7 @@ export default class PostmanSprite extends SpriteClass {
         this.dx = 0;
         break;
       case PostmanState.WALKING_LEFT:
-        // this.y = this.y - (this.y % TILE_SIZE) + 1;
+        this.y = this.y - ((this.y + this.height) % TILE_SIZE);
         this.dx = -1;
         this.ddy = 0;
         this.dy = 0;
@@ -71,7 +71,7 @@ export default class PostmanSprite extends SpriteClass {
         this.direction = 0;
         break;
       case PostmanState.WALKING_RIGHT:
-        // this.y = this.y - (this.y % TILE_SIZE) + 1;
+        this.y = this.y - ((this.y + this.height) % TILE_SIZE);
         this.dx = 1;
         this.ddy = 0;
         this.dy = 0;
