@@ -112,7 +112,7 @@ const gameScene = kontra.Scene({
       elapsed: 120,
       factory: postmanFactory,
       scene: gameScene,
-      x: 5.5 * 32,
+      x: 4.5 * 32,
       y: 1 * 32,
       //spawnMax: 0,
       direction: 1,

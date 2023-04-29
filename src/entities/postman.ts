@@ -39,6 +39,7 @@ const canvas = kontra.getCanvas();
 export default class PostmanSprite extends SpriteClass {
   static SCALE_X = 2;
   static SCALE_Y = this.SCALE_X;
+  static WALKING_SPEED = 1;
 
   init(props: any) {
     super.init({
@@ -69,7 +70,7 @@ export default class PostmanSprite extends SpriteClass {
         break;
       case PostmanState.WALKING_LEFT:
         this.y = this.y - (this.y % TILE_SIZE);
-        this.dx = -1;
+        this.dx = -PostmanSprite.WALKING_SPEED;
         this.ddy = 0;
         this.dy = 0;
         this.setScale(PostmanSprite.SCALE_X, PostmanSprite.SCALE_Y);
@@ -78,7 +79,7 @@ export default class PostmanSprite extends SpriteClass {
         break;
       case PostmanState.WALKING_RIGHT:
         this.y = this.y - (this.y % TILE_SIZE);
-        this.dx = 1;
+        this.dx = PostmanSprite.WALKING_SPEED;
         this.ddy = 0;
         this.dy = 0;
         this.setScale(-1 * PostmanSprite.SCALE_X, PostmanSprite.SCALE_Y);
@@ -103,8 +104,23 @@ export default class PostmanSprite extends SpriteClass {
   update() {
     super.update();
 
-    if (this.x < -this.width || this.x > canvas.width) {
-      this.x = (this.x + canvas.width) % canvas.width;
+    if (this.x < 0) {
+      if (this.state === PostmanState.WALKING_LEFT && this.x < -this.width) {
+        this.x = canvas.width + this.width;
+      }
+
+      return;
+    }
+
+    if (this.x >= canvas.width) {
+      if (
+        this.state === PostmanState.WALKING_RIGHT &&
+        this.x >= canvas.width + this.width
+      ) {
+        this.x = 0 - this.width;
+      }
+
+      return;
     }
 
     if (this.isCollidingWithWorld()) {
