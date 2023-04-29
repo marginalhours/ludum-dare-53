@@ -73,7 +73,7 @@ const gameScene = kontra.Scene({
       const gibCount = 48;
       return Array.from(Array(gibCount).keys())
         .map((_) => {
-          const arcSize = 0.4;
+          const arcSize = Math.PI;
           const heading = Math.PI + (0.5 * arcSize - arcSize * Math.random());
           const speed = 1 + 2.5 * Math.random();
 

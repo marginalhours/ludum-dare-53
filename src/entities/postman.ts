@@ -33,8 +33,8 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
 const canvas = kontra.getCanvas();
 
 export default class PostmanSprite extends SpriteClass {
-  static SCALE_X = 1.5;
-  static SCALE_Y = 1.5;
+  static SCALE_X = 1;
+  static SCALE_Y = this.SCALE_X;
 
   init(props: any) {
     super.init({
