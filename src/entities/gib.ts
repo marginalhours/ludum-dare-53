@@ -15,13 +15,15 @@ export default class GibSprite extends SpriteClass {
     this.tiles = tiles;
     this.gibState = GibState.FLYING;
 
+    const gibColours = ["#e53b44", "#e4a672", "#ffe762", "#4f6781"];
+
     super.init({
-      color: "#ff0000",
-      width: 2,
-      height: 2,
+      color: gibColours[Math.floor(Math.random() * gibColours.length)],
+      width: 1 + 2 * Math.random(),
+      height: 1 + 2 * Math.random(),
       dx,
       dy,
-      ddy: 0.05,
+      ddy: 0.035,
       ...props,
     });
   }
