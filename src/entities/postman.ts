@@ -93,9 +93,16 @@ export default class PostmanSprite extends SpriteClass {
   }
 
   isCollidingWithWorld() {
-    const tileAtBase = (this.tiles as TileEngine).tileAtLayer("world", this);
+    const tileAtLeftCorner = (this.tiles as TileEngine).tileAtLayer("world", {
+      x: this.x - this.width / 2,
+      y: this.y,
+    });
+    const tileAtRightCorner = (this.tiles as TileEngine).tileAtLayer("world", {
+      x: this.x + this.width / 2,
+      y: this.y,
+    });
 
-    if (tileAtBase !== 0) {
+    if (tileAtLeftCorner !== 0 || tileAtRightCorner !== 0) {
       return true;
     }
 
