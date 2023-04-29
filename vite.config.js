@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/browser-game-template/',
+  base: "/ludum-dare-53/",
   build: {
     assetsInlineLimit: 0, // don't inline stuff! breaks the build
   },
