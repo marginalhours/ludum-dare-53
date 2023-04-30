@@ -1,16 +1,11 @@
-import kontra, { TileEngine } from "kontra";
+import kontra from "kontra";
 import { EventType } from "../constants";
 const canvas = kontra.getCanvas();
 import { SceneID } from "./constants";
-
-import tilesetSrc from "./../assets/images/tileset-new.png";
-
-// Not using Kontra's asset loading here because Vite inlines the JSON.
-import tilesetJson from "./../assets/data/tileset.json";
-
 import PostmanSprite, { gibPostman } from "../entities/postman";
 import Spawner, { createAndAddSpawners } from "../entities/spawner";
 import { GibPool } from "../entities/gib";
+import { TileManager } from "../TileManager";
 
 let winButton = kontra.Button({
   text: {
@@ -53,15 +48,14 @@ const getRandomDirection = (spawnerDirection: number): number => {
   return Math.random() < spawnerDirection ? 0 : 1;
 };
 
-const postmanFactory = (sp: Spawner, tiles: TileEngine) => {
+const postmanFactory = (sp: Spawner) => {
   let man = new PostmanSprite({
     x: sp.x,
     y: sp.y,
     ddy: 0.1,
-    tiles,
     direction: getRandomDirection(sp.direction),
     murder: () => {
-      gibPostman(man, tiles);
+      gibPostman(man);
       sp.scene.remove(man);
     },
   });
@@ -75,17 +69,10 @@ const gameScene = kontra.Scene({
     this.add(GibPool);
 
     winButton.focus();
-    // Add tile engine
-    (tilesetJson as any).tilesets[0].source = null;
-    (tilesetJson as any).tilesets[0].image = kontra.imageAssets[tilesetSrc];
-    const tileEngine = kontra.TileEngine(tilesetJson);
-    this.add(tileEngine);
 
-    createAndAddSpawners(
-      this as any as kontra.Scene,
-      tileEngine,
-      postmanFactory
-    );
+    this.add(TileManager.getInstance().tileEngine);
+
+    createAndAddSpawners(this as any as kontra.Scene, postmanFactory);
   },
   onHide() {
     this.remove(...men);

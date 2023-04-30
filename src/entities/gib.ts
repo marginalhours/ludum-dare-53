@@ -1,4 +1,5 @@
-import kontra, { TileEngine } from "kontra";
+import kontra from "kontra";
+import { TileManager } from "../TileManager";
 const { SpriteClass, Pool, PoolClass } = kontra;
 
 enum GibState {
@@ -8,12 +9,11 @@ enum GibState {
 
 export default class GibSprite extends SpriteClass {
   init(props: any) {
-    const { heading, tiles, speed } = props;
+    const { heading, speed } = props;
 
     const dy = speed * Math.cos(heading);
     const dx = speed * Math.sin(heading);
     const ddy = 0.15;
-    this.tiles = tiles;
     this.state = GibState.FLYING;
 
     // TODO: If you gib a good postie, he should have a different palette
@@ -54,25 +54,12 @@ export default class GibSprite extends SpriteClass {
   }
 
   isCollidingWithWorld() {
-    if (!this.tiles) {
-      return false;
-    }
-
-    const positionAtBase = {
+    const position = {
       x: this.x + this.width / 2,
       y: this.y + this.height,
     };
 
-    const tileAtBase = (this.tiles as TileEngine).tileAtLayer(
-      "world",
-      positionAtBase
-    );
-
-    if (tileAtBase !== 0) {
-      return true;
-    }
-
-    return false;
+    return TileManager.getInstance().isTileAtPosition(position);
   }
 }
 
