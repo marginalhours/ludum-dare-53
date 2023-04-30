@@ -5,7 +5,7 @@ import { EventType } from "../constants";
 
 import postie from "../assets/images/postie.png";
 import { GibPool } from "./gib";
-import { TILE_EMPTY, getTileAtPosition } from "../tileEngine";
+import { Tiles, getTileAtPosition, isTileWall } from "../tileEngine";
 
 let spriteSheet: any;
 
@@ -148,7 +148,7 @@ export default class PostmanSprite extends SpriteClass {
 
     const tileAtFeet = getTileAtPosition(this);
 
-    if (tileAtFeet !== TILE_EMPTY) {
+    if (tileAtFeet !== Tiles.Empty) {
       if (this.state === PostmanState.FALLING) {
         this.changeState(
           this.direction === DIRECTION_LEFT
@@ -162,7 +162,7 @@ export default class PostmanSprite extends SpriteClass {
 
     const tileAhead = this.getTileAhead();
 
-    if (isNaN(tileAhead) === false && tileAhead !== TILE_EMPTY) {
+    if (isTileWall(tileAhead)) {
       this.changeDirection();
     }
   }

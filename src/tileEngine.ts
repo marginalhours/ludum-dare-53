@@ -3,7 +3,11 @@ import { Position } from "./interfaces";
 import tilesetJson from "./assets/data/tileset.json";
 import tilesetSrc from "./assets/images/tileset-new.png";
 
-export const TILE_EMPTY = 0;
+export enum Tiles {
+  Empty = 0,
+  WallLeft = 15,
+  WallRight = 16,
+}
 
 let tileEngine: TileEngine;
 
@@ -19,5 +23,16 @@ export function getTileAtPosition(position: Position): number {
 }
 
 export function isTileAtPosition(position: Position): boolean {
-  return getTileAtPosition(position) !== TILE_EMPTY;
+  return getTileAtPosition(position) !== Tiles.Empty;
+}
+
+export function isTileWall(tile: number): boolean {
+  switch (tile) {
+    case Tiles.WallLeft:
+    case Tiles.WallRight:
+      return true;
+
+    default:
+      return false;
+  }
 }
