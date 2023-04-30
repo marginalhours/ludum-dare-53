@@ -70,14 +70,14 @@ class ControlGUI extends SpriteClass {
     const BAR_WIDTH = 8;
     const BAR_BORDER = 1;
     const VERTICAL_GAP = -16;
-    const FONT_SIZE = 12;
-    const PADDING = 4;
+    const FONT_SIZE = 16;
+    const PADDING = 2;
 
     this.context.save();
 
     // Now draw UI elements
 
-    this.context.font = `${FONT_SIZE}px monospace bold`;
+    this.context.font = `${FONT_SIZE}px monospace`;
 
     // timer bar
     switch (this.state) {
@@ -127,30 +127,33 @@ class ControlGUI extends SpriteClass {
     }
 
     // Keyboard hint
+    let offset = 0;
+
     switch (this.state) {
       case ControlState.LOADED:
-        this.context.fillStyle = "rgba(255, 255, 255, 1.0)";
+        this.context.fillStyle = "#efe8e8";
         this.context.strokeStyle = "rgba(0, 0, 0, 1.0)";
         break;
       case ControlState.RECOVERING:
       case ControlState.FIRING:
         this.context.fillStyle = "rgba(160, 160, 160, 1.0)";
         this.context.strokeStyle = "rgba(200, 200, 200, 1.0)";
+        offset = 2;
         break;
     }
 
     const p = this.parent as GameObject;
 
     this.context.fillRect(
-      p.width / 2 - PADDING - FONT_SIZE / 2,
-      p.height + 2,
+      p.width / 2 - PADDING - FONT_SIZE / 2 + offset - 2,
+      p.height + 2 + offset,
       FONT_SIZE + 2 * PADDING,
       FONT_SIZE + 2 * PADDING
     );
     this.context.strokeText(
       this.triggerKey,
-      p.width / 2 - FONT_SIZE / 2,
-      p.height + 12 + 4
+      p.width / 2 - FONT_SIZE / 2 + offset,
+      p.height + 12 + 4 + offset
     );
 
     this.context.restore();

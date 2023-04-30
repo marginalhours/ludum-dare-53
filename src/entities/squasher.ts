@@ -30,7 +30,7 @@ export default class SquasherClass extends ControlClass {
       ...props,
       animations: spriteSheet.animations,
       duration: 60,
-      cooldown: 200,
+      cooldown: 100,
       onReady: function () {
         this.playAnimation("idle");
       },
