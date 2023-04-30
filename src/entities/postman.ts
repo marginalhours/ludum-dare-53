@@ -65,6 +65,7 @@ export default class PostmanSprite extends SpriteClass {
   scaredElapsed: number = 0;
 
   state: PostmanState = PostmanState.FALLING;
+  isFallingThroughTrapdoor = false;
 
   init(props: any) {
     super.init({
@@ -216,7 +217,7 @@ export default class PostmanSprite extends SpriteClass {
 
     const tileAtFeet = getTileAtPosition(this);
 
-    if (tileAtFeet !== Tiles.Empty) {
+    if (tileAtFeet !== Tiles.Empty && !this.isFallingThroughTrapdoor) {
       if (this.state === PostmanState.FALLING) {
         this.changeState(
           this.direction === DIRECTION_LEFT
@@ -225,6 +226,7 @@ export default class PostmanSprite extends SpriteClass {
         );
       }
     } else {
+      this.isFallingThroughTrapdoor = false;
       this.changeState(PostmanState.FALLING);
     }
 
@@ -271,6 +273,7 @@ export default class PostmanSprite extends SpriteClass {
 
           case TrapdoorClass:
             if (entity.isFiring() && distanceFromCentre < 10) {
+              this.isFallingThroughTrapdoor = true;
               this.changeState(PostmanState.FALLING);
             }
             break;
