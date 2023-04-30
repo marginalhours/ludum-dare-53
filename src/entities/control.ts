@@ -1,4 +1,4 @@
-import { GameObject, SpriteClass, keyPressed, onKey } from "kontra";
+import { GameObject, SpriteClass, onKey } from "kontra";
 
 enum ControlState {
   LOADED = "loaded",
