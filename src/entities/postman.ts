@@ -44,7 +44,7 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
     frameHeight: 32,
     animations: {
       falling: {
-        frames: "21..25",
+        frames: "20..25",
         frameRate: 12,
       },
       walking: {

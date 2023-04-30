@@ -38,7 +38,7 @@ export default class TrapdoorClass extends ControlClass {
       ...props,
       animations: spriteSheet.animations,
       firingDuration: 200,
-      reloadingDuration: 300,
+      reloadingDuration: 100,
       startingDuration: 50,
       stoppingDuration: 50,
 
