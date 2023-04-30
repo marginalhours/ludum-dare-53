@@ -14,6 +14,7 @@ export enum Tiles {
   SpawnerRandom = 5,
   SpawnerRight = 6,
   Spring = 10,
+  Ground = 12,
   WallLeft = 15,
   WallRight = 16,
   Dog = 20,
@@ -48,13 +49,23 @@ export function isTileAtPosition(position: Position): boolean {
   return getTileAtPosition(position) !== Tiles.Empty;
 }
 
-export function isTileWall(tile: number): boolean {
-  switch (tile) {
-    case Tiles.WallLeft:
-    case Tiles.WallRight:
-      return true;
+export function isTileFloor(tile: number): boolean {
+  return [
+    Tiles.PlatformLeft,
+    Tiles.PlatformMiddle,
+    Tiles.PlatformRight,
+    Tiles.Ground,
+  ].includes(tile);
+}
 
-    default:
-      return false;
-  }
+export function isTileWall(tile: number): boolean {
+  return [Tiles.WallLeft, Tiles.WallRight].includes(tile);
+}
+
+export function isTileFloorOrWall(tile: number): boolean {
+  return isTileFloor(tile) || isTileWall(tile);
+}
+
+export function isTileFloorOrWallAtPosition(position: Position) {
+  return isTileFloorOrWall(getTileAtPosition(position));
 }

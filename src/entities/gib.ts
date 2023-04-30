@@ -1,5 +1,5 @@
 import kontra from "kontra";
-import { isTileAtPosition } from "../tileEngine";
+import { isTileFloorOrWallAtPosition } from "../tileEngine";
 const { SpriteClass, Pool, PoolClass } = kontra;
 
 enum GibState {
@@ -33,7 +33,8 @@ export default class GibSprite extends SpriteClass {
 
   update() {
     super.update();
-    if (this.isCollidingWithWorld()) {
+
+    if (isTileFloorOrWallAtPosition(this)) {
       this.changeState(GibState.LYING);
     }
   }
@@ -52,15 +53,6 @@ export default class GibSprite extends SpriteClass {
     }
 
     this.state = nextState;
-  }
-
-  isCollidingWithWorld() {
-    const position = {
-      x: this.x,
-      y: this.y,
-    };
-
-    return isTileAtPosition(position);
   }
 }
 
