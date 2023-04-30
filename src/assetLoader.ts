@@ -9,6 +9,9 @@ import { EventType } from "./constants";
 
 // Audio imports
 import boingSrc from "./assets/sounds/boing.ogg";
+import dog1Src from "./assets/sounds/dog1.mp3";
+import dog2Src from "./assets/sounds/dog2.mp3";
+import dog3Src from "./assets/sounds/dog3.mp3";
 
 // Image imports
 import tilesetSrc from "./assets/images/tileset-new.png";
@@ -21,7 +24,12 @@ import fanSrc from "./assets/images/fan-2.png";
 import squashSrc from "./assets/images/squasher.png";
 
 // Audio
-const audioFiles = [[SoundType.BOING, boingSrc]];
+const audioFiles = [
+  [SoundType.Boing, boingSrc],
+  [SoundType.Dog1, dog1Src],
+  [SoundType.Dog2, dog2Src],
+  [SoundType.Dog3, dog3Src],
+];
 
 // Images
 const imageFiles = [

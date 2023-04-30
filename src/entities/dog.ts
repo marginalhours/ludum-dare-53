@@ -1,6 +1,7 @@
 import kontra, { SpriteSheet, imageAssets } from "kontra";
 import ControlClass from "./control";
 import { EventType } from "../constants";
+import { playDog } from "../soundManager";
 
 import dog from "../assets/images/dog.png";
 
@@ -39,6 +40,7 @@ export default class DogClass extends ControlClass {
       },
       onFire: function () {
         this.playAnimation("fired");
+        playDog();
       },
     });
   }
