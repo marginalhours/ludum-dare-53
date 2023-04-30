@@ -5,6 +5,8 @@ import DogClass from "./dog";
 import { Position } from "../interfaces";
 import SpringClass from "./spring";
 import BollardClass from "./bollard";
+import TrapdoorClass from "./trapdoor";
+import SpikesClass from "./spikes";
 
 const TRIGGER_KEYS = "qwertyuiopasdfghjklzxcvbnm".split("");
 let triggerKeyIndex = 0;
@@ -56,6 +58,20 @@ function createEntity(
       return new SpringClass({
         x,
         y: y - 12,
+        triggerKey: getTriggerKey(),
+      });
+
+    case Tiles.TrapDoor:
+      return new TrapdoorClass({
+        x,
+        y: y - 16,
+        triggerKey: getTriggerKey(),
+      });
+
+    case Tiles.Spikes:
+      return new SpikesClass({
+        x,
+        y: y - 16,
         triggerKey: getTriggerKey(),
       });
   }

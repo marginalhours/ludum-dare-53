@@ -13,6 +13,7 @@ import DogClass from "./dog";
 import SpringClass from "./spring";
 import { playGib } from "../soundManager";
 import BollardClass from "./bollard";
+import SpikeClass from "./spikes";
 
 let spriteSheet: any;
 
@@ -238,6 +239,11 @@ export default class PostmanSprite extends SpriteClass {
               this.dy = -4;
             }
             break;
+
+          case SpikeClass:
+            if (entity.isFiring() && distanceFromCentre < 10) {
+              this.murder();
+            }
         }
       }
     }

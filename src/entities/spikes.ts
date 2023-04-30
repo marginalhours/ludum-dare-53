@@ -2,13 +2,13 @@ import kontra, { SpriteSheet, imageAssets } from "kontra";
 import ControlClass from "./control";
 import { EventType } from "../constants";
 
-import bollard from "../assets/images/bollard.png";
+import spikes from "../assets/images/spikes.png";
 
 let spriteSheet: any;
 
 kontra.on(EventType.LOADING_COMPLETE, () => {
   spriteSheet = SpriteSheet({
-    image: imageAssets[bollard],
+    image: imageAssets[spikes],
     frameWidth: 32,
     frameHeight: 32,
     animations: {
@@ -17,38 +17,30 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
         frameRate: 1,
       },
       starting: {
-        frames: "1..2",
-        frameRate: 4,
+        frames: "1..3",
+        frameRate: 6,
       },
-      firing: {
+      fired: {
         frames: "3",
         frameRate: 1,
       },
       stopping: {
         frames: "4..6",
-        frameRate: 4,
+        frameRate: 6,
       },
     },
   });
 });
 
-export default class BollardClass extends ControlClass {
+export default class SpikesClass extends ControlClass {
   init(props: any) {
     super.init({
       ...props,
       animations: spriteSheet.animations,
-      firingDuration: 200,
-      reloadingDuration: 300,
-      startingDuration: 25,
+      startingDuration: 10,
       stoppingDuration: 25,
-      onReloading: function () {
-        this.playAnimation("idle");
-        this.currentAnimation.reset();
-      },
-      onReloaded: function () {
-        this.playAnimation("idle");
-        this.currentAnimation.reset();
-      },
+      firingDuration: 50,
+      reloadingDuration: 100,
       onStarting: function () {
         this.playAnimation("starting");
         this.currentAnimation.reset();
@@ -58,7 +50,15 @@ export default class BollardClass extends ControlClass {
         this.currentAnimation.reset();
       },
       onFiring: function () {
-        this.playAnimation("firing");
+        this.playAnimation("fired");
+        this.currentAnimation.reset();
+      },
+      onReloaded: function () {
+        this.playAnimation("idle");
+        this.currentAnimation.reset();
+      },
+      onReloading: function () {
+        this.playAnimation("idle");
         this.currentAnimation.reset();
       },
     });
