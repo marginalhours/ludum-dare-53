@@ -3,6 +3,14 @@ import { TILE_SIZE, Tiles, forEachTile } from "../tileEngine";
 import Spawner, { getDirectionFromTileId } from "./spawner";
 import DogClass from "./dog";
 import { Position } from "../interfaces";
+import SpringClass from "./spring";
+
+const TRIGGER_KEYS = "qwertyuiopasdfghjklzxcvbnm".split("");
+let triggerKeyIndex = 0;
+
+function getTriggerKey() {
+  return TRIGGER_KEYS[triggerKeyIndex++ % TRIGGER_KEYS.length];
+}
 
 export const entities: any[] = [];
 
@@ -25,6 +33,8 @@ function createEntity(
   gameScene: any,
   postmanFactory: any
 ): any {
+  const { x, y } = position;
+
   switch (tile) {
     case Tiles.SpawnerLeft:
     case Tiles.SpawnerRandom:
@@ -32,12 +42,15 @@ function createEntity(
       return createSpawner(position, tile, gameScene, postmanFactory);
 
     case Tiles.Dog:
-      return createDog(position);
-  }
-}
+      return new DogClass({ x, y, triggerKey: getTriggerKey() });
 
-function createDog({ x, y }: Position) {
-  return new DogClass({ x, y, triggerKey: "d" });
+    case Tiles.Spring:
+      return new SpringClass({
+        x,
+        y: y - 12,
+        triggerKey: getTriggerKey(),
+      });
+  }
 }
 
 function createSpawner(

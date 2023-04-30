@@ -10,6 +10,7 @@ import { GibPool } from "./gib";
 import { Tiles, getTileAtPosition, isTileWall } from "../tileEngine";
 import { entities } from "./entityManager";
 import DogClass from "./dog";
+import SpringClass from "./spring";
 
 let spriteSheet: any;
 
@@ -210,6 +211,11 @@ export default class PostmanSprite extends SpriteClass {
           case DogClass:
             if (this.isWalking() && entity.isFiring()) {
               this.changeState(PostmanState.SCARED);
+            }
+
+          case SpringClass:
+            if (this.isWalking() && entity.isFiring()) {
+              this.dy = -4;
             }
 
           default:

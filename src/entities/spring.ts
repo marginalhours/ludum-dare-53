@@ -3,6 +3,7 @@ import ControlClass from "./control";
 import { EventType } from "../constants";
 
 import spring from "../assets/images/spring.png";
+import { SoundType, playSound } from "../soundManager";
 
 let spriteSheet: any;
 
@@ -39,6 +40,7 @@ export default class SpringClass extends ControlClass {
       },
       onFire: function () {
         this.playAnimation("fired");
+        playSound(SoundType.Boing);
       },
     });
   }

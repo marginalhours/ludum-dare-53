@@ -7,9 +7,13 @@ export const TILE_SIZE = 32;
 
 export enum Tiles {
   Empty = 0,
+  PlatformLeft = 1,
+  PlatformMiddle = 2,
+  PlatformRight = 3,
   SpawnerLeft = 4,
   SpawnerRandom = 5,
   SpawnerRight = 6,
+  Spring = 10,
   WallLeft = 15,
   WallRight = 16,
   Dog = 20,

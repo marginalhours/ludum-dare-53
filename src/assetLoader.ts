@@ -8,7 +8,7 @@ import { registerSound, SoundType } from "./soundManager";
 import { EventType } from "./constants";
 
 // Audio imports
-import boingSrc from "./assets/sounds/boing.ogg";
+import boingSrc from "./assets/sounds/boing.mp3";
 import dog1Src from "./assets/sounds/dog1.mp3";
 import dog2Src from "./assets/sounds/dog2.mp3";
 import dog3Src from "./assets/sounds/dog3.mp3";
