@@ -1,4 +1,4 @@
-import { getCanvas, imageAssets, TileEngine } from "kontra";
+import { imageAssets, TileEngine } from "kontra";
 import { Position } from "./interfaces";
 import tilesetJson from "./assets/data/tileset.json";
 import tilesetSrc from "./assets/images/tileset-new.png";
@@ -18,14 +18,13 @@ export enum Tiles {
 let tileEngine: TileEngine;
 
 export function forEachTile(
-  handler: (x: number, y: number, tile: number) => void
+  handler: (position: Position, tile: number) => void
 ): void {
-  const canvas = getCanvas();
-
-  for (let y = 0; y < canvas.height; y += TILE_SIZE) {
-    for (let x = 0; x < canvas.width; x += TILE_SIZE) {
-      const tile = getTileAtPosition({ x, y });
-      handler(x, y, tile);
+  for (let y = 0; y < tileEngine.mapheight; y += TILE_SIZE) {
+    for (let x = 0; x < tileEngine.mapwidth; x += TILE_SIZE) {
+      const position: Position = { x, y };
+      const tile = getTileAtPosition(position);
+      handler(position, tile);
     }
   }
 }

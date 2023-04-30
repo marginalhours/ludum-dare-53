@@ -3,14 +3,10 @@ import { EventType } from "../constants";
 const canvas = kontra.getCanvas();
 import { SceneID } from "./constants";
 import PostmanSprite, { gibPostman } from "../entities/postman";
-import Spawner, { getDirectionFromTileId } from "../entities/spawner";
+import Spawner from "../entities/spawner";
 import { GibPool } from "../entities/gib";
-import {
-  TILE_SIZE,
-  Tiles,
-  forEachTile,
-  initialiseTileEngine,
-} from "../tileEngine";
+import { initialiseTileEngine } from "../tileEngine";
+import { addEntitiesToGame } from "../entities/entityManager";
 
 let winButton = kontra.Button({
   text: {
@@ -70,6 +66,7 @@ const postmanFactory = (sp: Spawner) => {
 
 const gameScene = kontra.Scene({
   id: SceneID.GAME,
+
   onShow() {
     this.add(GibPool);
 
@@ -77,37 +74,13 @@ const gameScene = kontra.Scene({
 
     this.add(initialiseTileEngine());
 
-    // Add sprites based on tiles.
-    forEachTile((x, y, tile) => {
-      switch (tile) {
-        case Tiles.SpawnerLeft:
-        case Tiles.SpawnerRandom:
-        case Tiles.SpawnerRight:
-          const direction = getDirectionFromTileId(tile);
-
-          if (isNaN(direction)) {
-            return;
-          }
-
-          const spawner = new Spawner({
-            spawnEvery: 120, // 60 frames is 1 second
-            elapsed: 120,
-            factory: (sp: Spawner) => postmanFactory(sp),
-            scene: gameScene,
-            x: x + 0.5 * TILE_SIZE,
-            y: y + 1.5 * TILE_SIZE,
-            spawnMax: 0,
-            direction: direction,
-          });
-
-          gameScene.add(spawner);
-          break;
-      }
-    });
+    addEntitiesToGame(this, postmanFactory);
   },
+
   onHide() {
     this.remove(...men);
   },
+
   focus() {
     winButton.focus();
   },
