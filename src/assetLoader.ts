@@ -19,6 +19,7 @@ import dogSrc from "./assets/images/dog.png";
 import springSrc from "./assets/images/spring.png";
 import fanSrc from "./assets/images/fan-2.png";
 import squashSrc from "./assets/images/squasher.png";
+import bollardSrc from "./assets/images/bollard.png";
 
 // Audio
 const audioFiles = [[SoundType.BOING, boingSrc]];
@@ -33,6 +34,7 @@ const imageFiles = [
   springSrc,
   fanSrc,
   squashSrc,
+  bollardSrc,
 ];
 
 // Percentage tracking

@@ -4,6 +4,7 @@ import SpringClass from "../entities/spring";
 import FanClass from "../entities/fan";
 import DogClass from "../entities/dog";
 import SquasherClass from "../entities/squasher";
+import BollardClass from "../entities/bollard";
 
 const canvas = kontra.getCanvas();
 
@@ -34,16 +35,24 @@ const playgroundScene = kontra.Scene({
       triggerKey: "r",
     });
 
+    const bollard = new BollardClass({
+      x: canvas.width / 2 + 180,
+      y: canvas.height / 2,
+      triggerKey: "t",
+    });
+
     this.add(spring);
     this.add(fan);
     this.add(dog);
     this.add(squasher);
+    this.add(bollard);
 
     // Make sure to track controls via kontra.track() to get mouse events
     kontra.track(spring);
     kontra.track(fan);
     kontra.track(dog);
     kontra.track(squasher);
+    kontra.track(bollard);
   },
 });
 
