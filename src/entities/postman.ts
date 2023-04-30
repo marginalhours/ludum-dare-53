@@ -172,9 +172,9 @@ export const gibPostman = (man: PostmanSprite) => {
   const gibCount = 48;
   return Array.from(Array(gibCount).keys())
     .map((_) => {
-      const arcSize = Math.PI;
+      const arcSize = Math.PI / 2;
       const heading = Math.PI + (0.5 * arcSize - arcSize * Math.random());
-      const speed = 1 + 2.5 * Math.random();
+      const speed = 2 + 2.5 * Math.random();
 
       const gib = GibPool.get({
         x: man.x,

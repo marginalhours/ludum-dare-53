@@ -27,6 +27,7 @@ export default class GibSprite extends SpriteClass {
       dx,
       dy,
       ddy,
+      anchor: { x: 0.5, y: 0.5 },
     });
   }
 
@@ -55,8 +56,8 @@ export default class GibSprite extends SpriteClass {
 
   isCollidingWithWorld() {
     const position = {
-      x: this.x + this.width / 2,
-      y: this.y + this.height,
+      x: this.x,
+      y: this.y,
     };
 
     return isTileAtPosition(position);
