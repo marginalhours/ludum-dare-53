@@ -30,6 +30,11 @@ const playgroundScene = kontra.Scene({
     this.add(spring);
     this.add(fan);
     this.add(dog);
+
+    // Make sure to track controls via kontra.track() to get mouse events
+    kontra.track(spring);
+    kontra.track(fan);
+    kontra.track(dog);
   },
 });
 

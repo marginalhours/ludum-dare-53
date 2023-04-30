@@ -27,12 +27,16 @@ class ControlGUI extends SpriteClass {
     // TODO: call `offKey` in the right place to ditch the callback
     // (or wire this up in a better place)
     onKey(triggerKey, () => {
-      if (that.state === ControlState.LOADED) {
-        that.state = ControlState.FIRING;
-        that.onFire();
-        that.elapsed = 0;
-      }
+      that.trigger();
     });
+  }
+
+  trigger() {
+    if (this.state === ControlState.LOADED) {
+      this.state = ControlState.FIRING;
+      this.onFire();
+      this.elapsed = 0;
+    }
   }
 
   update() {
@@ -181,5 +185,10 @@ export default class ControlClass extends SpriteClass {
 
   update() {
     super.update();
+  }
+
+  onDown() {
+    // Handle mouse click / tap
+    this.gui.trigger();
   }
 }
