@@ -16,6 +16,7 @@ import BollardClass from "./bollard";
 import SpikeClass from "./spikes";
 import TrapdoorClass from "./trapdoor";
 import BarbecueClass from "./barbecue";
+import FanClass from "./fan";
 
 let spriteSheet: any;
 
@@ -279,6 +280,11 @@ export default class PostmanSprite extends SpriteClass {
               this.changeState(PostmanState.BURNING);
             }
             break;
+
+          case FanClass:
+            if (entity.isFiring() && distanceFromCentre < 10) {
+              this.dy = -4;
+            }
         }
       }
     }

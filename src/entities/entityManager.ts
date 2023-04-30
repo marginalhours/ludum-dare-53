@@ -8,6 +8,7 @@ import BollardClass from "./bollard";
 import TrapdoorClass from "./trapdoor";
 import SpikesClass from "./spikes";
 import BarbecueClass from "./barbecue";
+import FanClass from "./fan";
 
 const TRIGGER_KEYS = "qwertyuiopasdfghjklzxcvbnm".split("");
 let triggerKeyIndex = 0;
@@ -80,6 +81,13 @@ function createEntity(
       return new BarbecueClass({
         x,
         y: y - 14,
+        triggerKey: getTriggerKey(),
+      });
+
+    case Tiles.Fan:
+      return new FanClass({
+        x,
+        y: y - 16,
         triggerKey: getTriggerKey(),
       });
   }
