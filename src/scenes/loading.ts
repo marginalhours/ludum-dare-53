@@ -34,7 +34,10 @@ kontra.on(EventType.LOADING_PROGRESS, (fraction: number) => {
 });
 
 kontra.on(EventType.LOADING_COMPLETE, () => {
-  setTimeout(() => kontra.emit(EventType.CHANGE_SCENE, SceneID.GAME), 500);
+  setTimeout(
+    () => kontra.emit(EventType.CHANGE_SCENE, SceneID.PLAYGROUND),
+    500
+  );
 });
 
 const loadingScene = kontra.Scene({
