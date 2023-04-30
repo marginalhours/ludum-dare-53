@@ -4,6 +4,7 @@ import Spawner, { getDirectionFromTileId } from "./spawner";
 import DogClass from "./dog";
 import { Position } from "../interfaces";
 import SpringClass from "./spring";
+import BollardClass from "./bollard";
 
 const TRIGGER_KEYS = "qwertyuiopasdfghjklzxcvbnm".split("");
 let triggerKeyIndex = 0;
@@ -36,13 +37,20 @@ function createEntity(
   const { x, y } = position;
 
   switch (tile) {
+    case Tiles.Bollard:
+      return new BollardClass({
+        x,
+        y: y - 14,
+        triggerKey: getTriggerKey(),
+      });
+
+    case Tiles.Dog:
+      return new DogClass({ x, y, triggerKey: getTriggerKey() });
+
     case Tiles.SpawnerLeft:
     case Tiles.SpawnerRandom:
     case Tiles.SpawnerRight:
       return createSpawner(position, tile, gameScene, postmanFactory);
-
-    case Tiles.Dog:
-      return new DogClass({ x, y, triggerKey: getTriggerKey() });
 
     case Tiles.Spring:
       return new SpringClass({

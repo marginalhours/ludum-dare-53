@@ -12,6 +12,7 @@ import { entities } from "./entityManager";
 import DogClass from "./dog";
 import SpringClass from "./spring";
 import { playGib } from "../soundManager";
+import BollardClass from "./bollard";
 
 let spriteSheet: any;
 
@@ -73,7 +74,6 @@ export default class PostmanSprite extends SpriteClass {
 
   onDown() {
     this.murder();
-    playGib();
   }
 
   changeState(nextState: PostmanState) {
@@ -209,19 +209,32 @@ export default class PostmanSprite extends SpriteClass {
 
     for (const entity of entities) {
       if (collides(this, entity)) {
+        const distanceFromCentre = Math.abs(
+          entity.x + 0.5 * TILE_SIZE - this.x
+        );
+
         switch (entity.constructor) {
+          case BollardClass:
+            if (
+              this.isWalking() &&
+              distanceFromCentre < 10 &&
+              entity.isFiring()
+            ) {
+              this.murder();
+            }
+            break;
+
           case DogClass:
             if (this.isWalking() && entity.isFiring()) {
               this.changeState(PostmanState.SCARED);
             }
+            break;
 
           case SpringClass:
             if (this.isWalking() && entity.isFiring()) {
               this.dy = -4;
             }
-
-          default:
-            return;
+            break;
         }
       }
     }
@@ -230,6 +243,9 @@ export default class PostmanSprite extends SpriteClass {
 
 export const gibPostman = (man: PostmanSprite) => {
   const gibCount = 48;
+
+  playGib();
+
   return Array.from(Array(gibCount).keys())
     .map((_) => {
       const arcSize = Math.PI / 2;
