@@ -1,4 +1,5 @@
-import { GameObject, SpriteClass, onKey } from "kontra";
+import { GameObject, SpriteClass, imageAssets, onKey } from "kontra";
+import frameSrc from "../assets/images/frame.png";
 
 export enum ControlState {
   RELOADED = "reloaded", // ready to fire
@@ -79,27 +80,33 @@ class ControlGUI extends SpriteClass {
 
     switch (p.state) {
       case ControlState.RELOADED:
-        this.context.fillStyle = "#efe8e8";
-        this.context.strokeStyle = "rgba(0, 0, 0, 1.0)";
+        this.context.fillStyle = "rgba(0, 0, 0, 1.0)";
         break;
-      case ControlState.RELOADING:
-      case ControlState.FIRING:
+      default:
         this.context.fillStyle = "rgba(160, 160, 160, 1.0)";
-        this.context.strokeStyle = "rgba(200, 200, 200, 1.0)";
         offset = 2;
         break;
     }
 
-    this.context.fillRect(
+    const frameImage = imageAssets[frameSrc];
+
+    this.context.drawImage(
+      frameImage,
       p.width / 2 - PADDING - FONT_SIZE / 2 + offset - 2,
-      p.height + 2 + offset,
-      FONT_SIZE + 2 * PADDING,
-      FONT_SIZE + 2 * PADDING
+      p.height + 2 + offset
     );
-    this.context.strokeText(
+
+    // this.context.fillRect(
+    //   p.width / 2 - PADDING - FONT_SIZE / 2 + offset - 2,
+    //   p.height + 2 + offset,
+    //   FONT_SIZE + 2 * PADDING,
+    //   FONT_SIZE + 2 * PADDING
+    // );
+
+    this.context.fillText(
       p.triggerKey,
-      p.width / 2 - FONT_SIZE / 2 + offset,
-      p.height + 12 + 4 + offset
+      p.width / 2 - FONT_SIZE / 2 + offset - 1,
+      p.height + 12 + 4 + offset - 1
     );
 
     this.context.restore();

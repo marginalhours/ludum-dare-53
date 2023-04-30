@@ -25,6 +25,8 @@ const DIRECTION_LEFT = 0;
 const DIRECTION_RIGHT = 1;
 const SCARED_DURATION = 60;
 const BURNING_DURATION = 60;
+const SPRING_SPEED = -4;
+const FAN_SPEED = -4;
 
 enum PostmanState {
   FALLING = "falling",
@@ -261,7 +263,7 @@ export default class PostmanSprite extends SpriteClass {
 
           case SpringClass:
             if (this.isWalking() && entity.isFiring()) {
-              this.dy = -4;
+              this.dy = SPRING_SPEED;
             }
             break;
 
@@ -286,7 +288,7 @@ export default class PostmanSprite extends SpriteClass {
 
           case FanClass:
             if (entity.isFiring() && distanceFromCentre < 10) {
-              this.dy = -4;
+              this.dy = FAN_SPEED;
             }
         }
       }

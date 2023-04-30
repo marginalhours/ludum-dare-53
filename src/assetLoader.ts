@@ -31,6 +31,7 @@ import houseSrc from "./assets/images/house.png";
 import laserSrc from "./assets/images/laser.png";
 import trapdoorSrc from "./assets/images/trapdoor.png";
 import teleporterSrc from "./assets/images/teleporter.png";
+import frameSrc from "./assets/images/frame.png";
 
 // Audio
 const audioFiles = [
@@ -59,6 +60,7 @@ const imageFiles = [
   laserSrc,
   trapdoorSrc,
   teleporterSrc,
+  frameSrc,
 ];
 
 // Percentage tracking
