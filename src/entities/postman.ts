@@ -20,8 +20,8 @@ enum PostmanState {
 kontra.on(EventType.LOADING_COMPLETE, () => {
   spriteSheet = SpriteSheet({
     image: imageAssets[postie],
-    frameWidth: 16,
-    frameHeight: 16,
+    frameWidth: 32,
+    frameHeight: 32,
     animations: {
       falling: {
         frames: "0..1",
@@ -38,8 +38,6 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
 const canvas = kontra.getCanvas();
 
 export default class PostmanSprite extends SpriteClass {
-  static SCALE_X = 2;
-  static SCALE_Y = this.SCALE_X;
   static WALKING_SPEED = 1;
 
   init(props: any) {
@@ -50,7 +48,6 @@ export default class PostmanSprite extends SpriteClass {
     this.anchor.x = 0.5;
     this.anchor.y = 1;
     this.direction = props.direction == null ? 0 : props.direction; // 0 = left, 1 = right
-    this.setScale(PostmanSprite.SCALE_X, PostmanSprite.SCALE_Y);
     this.changeState(PostmanState.FALLING);
   }
 
@@ -74,7 +71,7 @@ export default class PostmanSprite extends SpriteClass {
         this.dx = -PostmanSprite.WALKING_SPEED;
         this.ddy = 0;
         this.dy = 0;
-        this.setScale(PostmanSprite.SCALE_X, PostmanSprite.SCALE_Y);
+        this.setScale(1, 1);
         this.playAnimation("walking");
         this.direction = 0;
         break;
@@ -83,7 +80,7 @@ export default class PostmanSprite extends SpriteClass {
         this.dx = PostmanSprite.WALKING_SPEED;
         this.ddy = 0;
         this.dy = 0;
-        this.setScale(-1 * PostmanSprite.SCALE_X, PostmanSprite.SCALE_Y);
+        this.setScale(-1, 1);
         this.playAnimation("walking");
         this.direction = 1;
         break;

@@ -76,14 +76,14 @@ function createAndAddSpawners(
   tileEngine: TileEngine,
   postmanFactory: (sp: Spawner, tiles: TileEngine) => PostmanSprite[]
 ): Spawner[] {
-  const SPAWNER_TILE_ID = 72;
+  const SPAWNER_TILE_IDS = [4, 5, 6];
 
   const result: Spawner[] = [];
 
   for (let x = TILE_SIZE / 2; x < canvas.width; x += TILE_SIZE) {
     const tileId = tileEngine.tileAtLayer("world", { x, y: TILE_SIZE / 2 });
 
-    if (tileId !== SPAWNER_TILE_ID) {
+    if (SPAWNER_TILE_IDS.includes(tileId)) {
       continue;
     }
 
@@ -114,7 +114,6 @@ const gameScene = kontra.Scene({
     // Add tile engine
     (tilesetJson as any).tilesets[0].source = null;
     (tilesetJson as any).tilesets[0].image = kontra.imageAssets[tilesetSrc];
-    console.log(tilesetJson);
     const tileEngine = kontra.TileEngine(tilesetJson);
     this.add(tileEngine);
 
