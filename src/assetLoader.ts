@@ -12,6 +12,9 @@ import boingSrc from "./assets/sounds/boing.mp3";
 import dog1Src from "./assets/sounds/dog1.mp3";
 import dog2Src from "./assets/sounds/dog2.mp3";
 import dog3Src from "./assets/sounds/dog3.mp3";
+import gib1Src from "./assets/sounds/gib1.mp3";
+import gib2Src from "./assets/sounds/gib2.mp3";
+import gib3Src from "./assets/sounds/gib3.mp3";
 
 // Image imports
 import tilesetSrc from "./assets/images/tileset-new.png";
@@ -30,6 +33,9 @@ const audioFiles = [
   [SoundType.Dog1, dog1Src],
   [SoundType.Dog2, dog2Src],
   [SoundType.Dog3, dog3Src],
+  [SoundType.Gib1, gib1Src],
+  [SoundType.Gib2, gib2Src],
+  [SoundType.Gib3, gib3Src],
 ];
 
 // Images

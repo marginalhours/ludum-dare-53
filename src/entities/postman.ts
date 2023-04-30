@@ -11,6 +11,7 @@ import { Tiles, getTileAtPosition, isTileWall } from "../tileEngine";
 import { entities } from "./entityManager";
 import DogClass from "./dog";
 import SpringClass from "./spring";
+import { playGib } from "../soundManager";
 
 let spriteSheet: any;
 
@@ -72,6 +73,7 @@ export default class PostmanSprite extends SpriteClass {
 
   onDown() {
     this.murder();
+    playGib();
   }
 
   changeState(nextState: PostmanState) {
