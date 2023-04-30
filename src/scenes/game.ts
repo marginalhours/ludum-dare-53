@@ -5,7 +5,7 @@ import { SceneID } from "./constants";
 import PostmanSprite, { gibPostman } from "../entities/postman";
 import Spawner, { createAndAddSpawners } from "../entities/spawner";
 import { GibPool } from "../entities/gib";
-import { TileManager } from "../TileManager";
+import { initialiseTileEngine } from "../tileEngine";
 
 let winButton = kontra.Button({
   text: {
@@ -70,7 +70,7 @@ const gameScene = kontra.Scene({
 
     winButton.focus();
 
-    this.add(TileManager.getInstance().tileEngine);
+    this.add(initialiseTileEngine());
 
     createAndAddSpawners(this as any as kontra.Scene, postmanFactory);
   },

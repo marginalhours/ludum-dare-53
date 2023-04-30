@@ -1,5 +1,5 @@
 import kontra from "kontra";
-import { TileManager } from "../TileManager";
+import { isTileAtPosition } from "../tileEngine";
 const { SpriteClass, Pool, PoolClass } = kontra;
 
 enum GibState {
@@ -59,7 +59,7 @@ export default class GibSprite extends SpriteClass {
       y: this.y + this.height,
     };
 
-    return TileManager.getInstance().isTileAtPosition(position);
+    return isTileAtPosition(position);
   }
 }
 

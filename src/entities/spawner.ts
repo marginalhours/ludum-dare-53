@@ -1,6 +1,6 @@
 import { getCanvas, GameObjectClass, Scene } from "kontra";
 import PostmanSprite from "./postman";
-import { TileManager } from "../TileManager";
+import { getTileAtPosition } from "../tileEngine";
 
 const TILE_SIZE = 32;
 const TILE_ID_LEFT = 4;
@@ -45,7 +45,7 @@ export function createAndAddSpawners(
   const result: Spawner[] = [];
 
   for (let x = TILE_SIZE / 2; x < canvasWidth; x += TILE_SIZE) {
-    const tileId = TileManager.getInstance().getTileAtPosition({
+    const tileId = getTileAtPosition({
       x,
       y: TILE_SIZE / 2,
     });

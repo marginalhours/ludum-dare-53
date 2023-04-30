@@ -5,11 +5,13 @@ import { EventType } from "../constants";
 
 import postie from "../assets/images/postie.png";
 import { GibPool } from "./gib";
-import { TileManager } from "../TileManager";
+import { TILE_EMPTY, getTileAtPosition } from "../tileEngine";
 
 let spriteSheet: any;
 
 const TILE_SIZE = 32;
+const DIRECTION_LEFT = 0;
+const DIRECTION_RIGHT = 1;
 
 enum PostmanState {
   FALLING = "falling",
@@ -41,6 +43,8 @@ const canvas = kontra.getCanvas();
 export default class PostmanSprite extends SpriteClass {
   static WALKING_SPEED = 1;
 
+  state: PostmanState = PostmanState.FALLING;
+
   init(props: any) {
     super.init({
       ...props,
@@ -48,8 +52,7 @@ export default class PostmanSprite extends SpriteClass {
     });
     this.anchor.x = 0.5;
     this.anchor.y = 1;
-    this.direction = props.direction == null ? 0 : props.direction; // 0 = left, 1 = right
-    this.changeState(PostmanState.FALLING);
+    this.direction = props.direction == null ? DIRECTION_LEFT : props.direction;
   }
 
   onDown() {
@@ -57,7 +60,7 @@ export default class PostmanSprite extends SpriteClass {
   }
 
   changeState(nextState: PostmanState) {
-    if (nextState == this.state) {
+    if (nextState === this.state) {
       return;
     }
 
@@ -67,6 +70,7 @@ export default class PostmanSprite extends SpriteClass {
         this.dx = 0;
         this.playAnimation("falling");
         break;
+
       case PostmanState.WALKING_LEFT:
         this.y = this.y - (this.y % TILE_SIZE);
         this.dx = -PostmanSprite.WALKING_SPEED;
@@ -74,8 +78,9 @@ export default class PostmanSprite extends SpriteClass {
         this.dy = 0;
         this.setScale(1, 1);
         this.playAnimation("walking");
-        this.direction = 0;
+        this.direction = DIRECTION_LEFT;
         break;
+
       case PostmanState.WALKING_RIGHT:
         this.y = this.y - (this.y % TILE_SIZE);
         this.dx = PostmanSprite.WALKING_SPEED;
@@ -83,15 +88,40 @@ export default class PostmanSprite extends SpriteClass {
         this.dy = 0;
         this.setScale(-1, 1);
         this.playAnimation("walking");
-        this.direction = 1;
+        this.direction = DIRECTION_RIGHT;
         break;
     }
 
     this.state = nextState;
   }
 
-  isCollidingWithWorld() {
-    return TileManager.getInstance().isTileAtPosition(this);
+  // If walking, will change direction.
+  changeDirection(): void {
+    switch (this.state) {
+      case PostmanState.WALKING_LEFT:
+        this.changeState(PostmanState.WALKING_RIGHT);
+        break;
+
+      case PostmanState.WALKING_RIGHT:
+        this.changeState(PostmanState.WALKING_LEFT);
+        break;
+    }
+  }
+
+  getTileAhead(): number {
+    const lookAhead = 10;
+
+    switch (this.state) {
+      case PostmanState.WALKING_LEFT:
+      case PostmanState.WALKING_RIGHT:
+        const x =
+          this.x +
+          (this.state === PostmanState.WALKING_LEFT ? -1 : 1) * lookAhead;
+        return getTileAtPosition({ x, y: this.y - 10 });
+
+      default:
+        return NaN;
+    }
   }
 
   update() {
@@ -116,16 +146,24 @@ export default class PostmanSprite extends SpriteClass {
       return;
     }
 
-    if (this.isCollidingWithWorld()) {
-      if (this.state == PostmanState.FALLING) {
+    const tileAtFeet = getTileAtPosition(this);
+
+    if (tileAtFeet !== TILE_EMPTY) {
+      if (this.state === PostmanState.FALLING) {
         this.changeState(
-          this.direction === 0
+          this.direction === DIRECTION_LEFT
             ? PostmanState.WALKING_LEFT
             : PostmanState.WALKING_RIGHT
         );
       }
     } else {
       this.changeState(PostmanState.FALLING);
+    }
+
+    const tileAhead = this.getTileAhead();
+
+    if (isNaN(tileAhead) === false && tileAhead !== TILE_EMPTY) {
+      this.changeDirection();
     }
   }
 }
