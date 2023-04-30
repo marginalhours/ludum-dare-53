@@ -26,6 +26,11 @@ import springSrc from "./assets/images/spring.png";
 import fanSrc from "./assets/images/fan-2.png";
 import squashSrc from "./assets/images/squasher.png";
 import bollardSrc from "./assets/images/bollard.png";
+import barbecueSrc from "./assets/images/barbecue.png";
+import houseSrc from "./assets/images/house.png";
+import laserSrc from "./assets/images/laser.png";
+import trapdoorSrc from "./assets/images/trapdoor.png";
+import teleporterSrc from "./assets/images/teleporter.png";
 
 // Audio
 const audioFiles = [
@@ -49,6 +54,11 @@ const imageFiles = [
   fanSrc,
   squashSrc,
   bollardSrc,
+  barbecueSrc,
+  houseSrc,
+  laserSrc,
+  trapdoorSrc,
+  teleporterSrc,
 ];
 
 // Percentage tracking

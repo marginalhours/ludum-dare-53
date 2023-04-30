@@ -30,17 +30,17 @@ export default class SpringClass extends ControlClass {
     super.init({
       ...props,
       animations: spriteSheet.animations,
-      duration: 100,
-      cooldown: 100,
-      onReady: function () {
-        this.playAnimation("idle");
-      },
-      onFinished: function () {
-        this.playAnimation("idle");
-      },
-      onFire: function () {
+      firingDuration: 100,
+      reloadingDuration: 100,
+      onFiring: function () {
         this.playAnimation("fired");
         playSound(SoundType.Boing);
+      },
+      onReloaded: function () {
+        this.playAnimation("idle");
+      },
+      onReloading: function () {
+        this.playAnimation("idle");
       },
     });
   }

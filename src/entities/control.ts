@@ -1,9 +1,11 @@
 import { GameObject, SpriteClass, onKey } from "kontra";
 
 export enum ControlState {
-  LOADED = "loaded",
-  FIRING = "firing",
-  RECOVERING = "recovering",
+  RELOADED = "reloaded", // ready to fire
+  STARTING = "starting", // transitioning from RELOADED to firing
+  FIRING = "firing", // firing
+  STOPPING = "stopping", // stopping firing
+  RELOADING = "reloading", // cooling down
 }
 
 class ControlGUI extends SpriteClass {
@@ -25,12 +27,15 @@ class ControlGUI extends SpriteClass {
 
     // timer bar
     switch (p.state) {
-      case ControlState.LOADED:
+      // in these 3 states, timers don't matter
+      case ControlState.RELOADED:
+      case ControlState.STARTING:
+      case ControlState.STOPPING:
         // this.context.fillStyle = "rgba(255, 255, 255, 1.0)";
         // this.context.fillRect(-1, VERTICAL_GAP -1, this.width + (2 * BAR_BORDER), BAR_WIDTH + (2 * BAR_BORDER));
         break;
-      case ControlState.RECOVERING: {
-        const progress = p.elapsed / p.cooldown;
+      case ControlState.RELOADING: {
+        const progress = p.elapsed / p.reloadingDuration;
         this.context.fillStyle = `rgba(255, 255, 255, 1.0)`;
         this.context.strokeStyle = `rgba(255, 255, 255, 1.0)`;
 
@@ -49,7 +54,7 @@ class ControlGUI extends SpriteClass {
         break;
       }
       case ControlState.FIRING: {
-        const progress = (p.duration - p.elapsed) / p.duration;
+        const progress = (p.firingDuration - p.elapsed) / p.firingDuration;
         this.context.strokeStyle = "rgba(127, 255, 127, 1.0)";
         this.context.fillStyle = "rgba(127, 255, 127, 1.0)";
 
@@ -73,11 +78,11 @@ class ControlGUI extends SpriteClass {
     let offset = 0;
 
     switch (p.state) {
-      case ControlState.LOADED:
+      case ControlState.RELOADED:
         this.context.fillStyle = "#efe8e8";
         this.context.strokeStyle = "rgba(0, 0, 0, 1.0)";
         break;
-      case ControlState.RECOVERING:
+      case ControlState.RELOADING:
       case ControlState.FIRING:
         this.context.fillStyle = "rgba(160, 160, 160, 1.0)";
         this.context.strokeStyle = "rgba(200, 200, 200, 1.0)";
@@ -102,10 +107,53 @@ class ControlGUI extends SpriteClass {
 }
 
 // Base class for everything the player can interact with via keyboard / tap
-// Pass `onReady` and `onFinished` callbacks to change animations etc
+// Callbacks are:
+// onReloaded
+// onStarting
+// onFiring
+// onStopping
+// onReloading
+//
+// these all fire as the control transitions _into_ the above state
+//
+// We also have exciting duration properties for the above
+//
+// startingDuration
+// firingDuration
+// stoppingDuration
+// reloadingDuration
+//
+// there is no loadedDuration because it's up to the user duh
+//
+// the point of starting / stopping is to have separate "deploy" animations; they're not long-term things
 export default class ControlClass extends SpriteClass {
   init(props: any) {
     super.init(props);
+
+    const noop = () => {};
+
+    const {
+      startingDuration = 0,
+      stoppingDuration = 0,
+      firingDuration = 0,
+      reloadingDuration = 0,
+      onStarting = noop,
+      onFiring = noop,
+      onStopping = noop,
+      onReloading = noop,
+      onReloaded = noop,
+    } = props;
+
+    this.startingDuration = startingDuration;
+    this.stoppingDuration = stoppingDuration;
+    this.firingDuration = firingDuration;
+    this.reloadingDuration = reloadingDuration;
+
+    this.onStarting = onStarting;
+    this.onFiring = onFiring;
+    this.onStopping = onStopping;
+    this.onReloading = onReloading;
+    this.onReloaded = onReloaded;
 
     const { triggerKey, controlClass = ControlGUI } = props;
 
@@ -113,7 +161,7 @@ export default class ControlClass extends SpriteClass {
       ...props,
     });
 
-    this.state = ControlState.LOADED;
+    this.state = ControlState.RELOADED;
 
     this.addChild(this.gui);
 
@@ -125,32 +173,48 @@ export default class ControlClass extends SpriteClass {
   update() {
     super.update();
     switch (this.state) {
-      case ControlState.LOADED:
+      case ControlState.RELOADED:
         // nothing happens
         break;
-      case ControlState.RECOVERING:
+      case ControlState.STARTING:
         this.elapsed += 1;
-        if (this.elapsed === this.cooldown) {
-          this.state = ControlState.LOADED;
+        if (this.elapsed >= this.startingDuration) {
+          this.state = ControlState.FIRING;
           this.elapsed = 0;
-          this.onReady();
+          this.onFiring();
         }
         break;
       case ControlState.FIRING:
         this.elapsed += 1;
-        if (this.elapsed === this.duration) {
-          this.state = ControlState.RECOVERING;
+        if (this.elapsed >= this.firingDuration) {
+          this.state = ControlState.STOPPING;
           this.elapsed = 0;
-          this.onFinished();
+          this.onStopping();
+        }
+        break;
+      case ControlState.STOPPING:
+        this.elapsed += 1;
+        if (this.elapsed >= this.stoppingDuration) {
+          this.state = ControlState.RELOADING;
+          this.elapsed = 0;
+          this.onReloading();
+        }
+        break;
+      case ControlState.RELOADING:
+        this.elapsed += 1;
+        if (this.elapsed >= this.reloadingDuration) {
+          this.state = ControlState.RELOADED;
+          this.elapsed = 0;
+          this.onReloaded();
         }
         break;
     }
   }
 
   onDown() {
-    if (this.state === ControlState.LOADED) {
-      this.state = ControlState.FIRING;
-      this.onFire();
+    if (this.state === ControlState.RELOADED) {
+      this.state = ControlState.STARTING;
+      this.onStarting();
       this.elapsed = 0;
     }
   }

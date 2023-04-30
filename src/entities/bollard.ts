@@ -16,9 +16,17 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
         frames: "0",
         frameRate: 1,
       },
-      fired: {
-        frames: "1..6",
-        frameRate: 12,
+      starting: {
+        frames: "1..2",
+        frameRate: 4,
+      },
+      firing: {
+        frames: "3",
+        frameRate: 1,
+      },
+      stopping: {
+        frames: "4..6",
+        frameRate: 4,
       },
     },
   });
@@ -29,16 +37,24 @@ export default class BollardClass extends ControlClass {
     super.init({
       ...props,
       animations: spriteSheet.animations,
-      duration: 200,
-      cooldown: 300,
-      onReady: function () {
+      firingDuration: 200,
+      reloadingDuration: 300,
+      startingDuration: 25,
+      stoppingDuration: 25,
+      onReloading: function () {
         this.playAnimation("idle");
       },
-      onFinished: function () {
+      onReloaded: function () {
         this.playAnimation("idle");
       },
-      onFire: function () {
-        this.playAnimation("fired");
+      onStarting: function () {
+        this.playAnimation("starting");
+      },
+      onStopping: function () {
+        this.playAnimation("stopping");
+      },
+      onFiring: function () {
+        this.playAnimation("firing");
       },
     });
   }

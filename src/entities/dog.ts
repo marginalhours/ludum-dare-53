@@ -30,15 +30,15 @@ export default class DogClass extends ControlClass {
     super.init({
       ...props,
       animations: spriteSheet.animations,
-      duration: 200,
-      cooldown: 300,
-      onReady: function () {
+      firingDuration: 200,
+      reloadingDuration: 300,
+      onReloaded: function () {
         this.playAnimation("idle");
       },
-      onFinished: function () {
+      onReloading: function () {
         this.playAnimation("idle");
       },
-      onFire: function () {
+      onFiring: function () {
         this.playAnimation("fired");
         playDog();
       },

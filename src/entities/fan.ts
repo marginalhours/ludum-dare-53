@@ -29,15 +29,15 @@ export default class FanClass extends ControlClass {
     super.init({
       ...props,
       animations: spriteSheet.animations,
-      duration: 100,
-      cooldown: 100,
-      onReady: function () {
+      firingDuration: 100,
+      loadingDuration: 100,
+      onReloaded: function () {
         this.playAnimation("idle");
       },
-      onFinished: function () {
+      onReloading: function () {
         this.playAnimation("idle");
       },
-      onFire: function () {
+      onFiring: function () {
         this.playAnimation("fired");
       },
     });
