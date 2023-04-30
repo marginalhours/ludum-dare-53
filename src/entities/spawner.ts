@@ -2,9 +2,9 @@ import { getCanvas, GameObjectClass, Scene, TileEngine } from "kontra";
 import PostmanSprite from "./postman";
 
 const TILE_SIZE = 32;
-const TILE_ID_LEFT = 72;
-const TILE_ID_RANDOM = 73;
-const TILE_ID_RIGHT = 74;
+const TILE_ID_LEFT = 4;
+const TILE_ID_RANDOM = 5;
+const TILE_ID_RIGHT = 6;
 
 export default class Spawner extends GameObjectClass {
   #spawned = 0;

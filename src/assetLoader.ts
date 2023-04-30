@@ -11,7 +11,7 @@ import { EventType } from "./constants";
 import boingSrc from "./assets/sounds/boing.ogg";
 
 // Image imports
-import tilesetSrc from "./assets/images/tileset.png";
+import tilesetSrc from "./assets/images/tileset-new.png";
 import postieSrc from "./assets/images/postie.png";
 import goodPostieSrc from "./assets/images/good-postie.png";
 import spikesSrc from "./assets/images/spikes.png";
