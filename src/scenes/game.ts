@@ -3,9 +3,14 @@ import { EventType } from "../constants";
 const canvas = kontra.getCanvas();
 import { SceneID } from "./constants";
 import PostmanSprite, { gibPostman } from "../entities/postman";
-import Spawner, { createAndAddSpawners } from "../entities/spawner";
+import Spawner, { getDirectionFromTileId } from "../entities/spawner";
 import { GibPool } from "../entities/gib";
-import { initialiseTileEngine } from "../tileEngine";
+import {
+  TILE_SIZE,
+  Tiles,
+  forEachTile,
+  initialiseTileEngine,
+} from "../tileEngine";
 
 let winButton = kontra.Button({
   text: {
@@ -72,7 +77,33 @@ const gameScene = kontra.Scene({
 
     this.add(initialiseTileEngine());
 
-    createAndAddSpawners(this as any as kontra.Scene, postmanFactory);
+    // Add sprites based on tiles.
+    forEachTile((x, y, tile) => {
+      switch (tile) {
+        case Tiles.SpawnerLeft:
+        case Tiles.SpawnerRandom:
+        case Tiles.SpawnerRight:
+          const direction = getDirectionFromTileId(tile);
+
+          if (isNaN(direction)) {
+            return;
+          }
+
+          const spawner = new Spawner({
+            spawnEvery: 120, // 60 frames is 1 second
+            elapsed: 120,
+            factory: (sp: Spawner) => postmanFactory(sp),
+            scene: gameScene,
+            x: x + 0.5 * TILE_SIZE,
+            y: y + 1.5 * TILE_SIZE,
+            spawnMax: 0,
+            direction: direction,
+          });
+
+          gameScene.add(spawner);
+          break;
+      }
+    });
   },
   onHide() {
     this.remove(...men);

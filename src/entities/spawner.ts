@@ -1,11 +1,5 @@
-import { getCanvas, GameObjectClass, Scene } from "kontra";
-import PostmanSprite from "./postman";
-import { getTileAtPosition } from "../tileEngine";
-
-const TILE_SIZE = 32;
-const TILE_ID_LEFT = 4;
-const TILE_ID_RANDOM = 5;
-const TILE_ID_RIGHT = 6;
+import { GameObjectClass } from "kontra";
+import { Tiles } from "../tileEngine";
 
 export default class Spawner extends GameObjectClass {
   #spawned = 0;
@@ -37,51 +31,15 @@ export default class Spawner extends GameObjectClass {
   }
 }
 
-export function createAndAddSpawners(
-  gameScene: Scene,
-  postmanFactory: (sp: Spawner) => PostmanSprite[]
-): Spawner[] {
-  const canvasWidth = getCanvas().width;
-  const result: Spawner[] = [];
-
-  for (let x = TILE_SIZE / 2; x < canvasWidth; x += TILE_SIZE) {
-    const tileId = getTileAtPosition({
-      x,
-      y: TILE_SIZE / 2,
-    });
-    const direction = getDirectionFromTileId(tileId);
-
-    if (isNaN(direction)) {
-      continue;
-    }
-
-    const spawner = new Spawner({
-      spawnEvery: 120, // 60 frames is 1 second
-      elapsed: 120,
-      factory: (sp: Spawner) => postmanFactory(sp),
-      scene: gameScene,
-      x,
-      y: 1.5 * TILE_SIZE,
-      spawnMax: 0,
-      direction: direction,
-    });
-
-    gameScene.add(spawner);
-    result.push(spawner);
-  }
-
-  return result;
-}
-
 export function getDirectionFromTileId(tileId: number): number {
   switch (tileId) {
-    case TILE_ID_LEFT:
+    case Tiles.SpawnerLeft:
       return 0;
 
-    case TILE_ID_RANDOM:
+    case Tiles.SpawnerRandom:
       return 0.5;
 
-    case TILE_ID_RIGHT:
+    case Tiles.SpawnerRight:
       return 1;
 
     default:
