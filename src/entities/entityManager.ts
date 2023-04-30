@@ -7,6 +7,7 @@ import SpringClass from "./spring";
 import BollardClass from "./bollard";
 import TrapdoorClass from "./trapdoor";
 import SpikesClass from "./spikes";
+import BarbecueClass from "./barbecue";
 
 const TRIGGER_KEYS = "qwertyuiopasdfghjklzxcvbnm".split("");
 let triggerKeyIndex = 0;
@@ -72,6 +73,13 @@ function createEntity(
       return new SpikesClass({
         x,
         y: y - 16,
+        triggerKey: getTriggerKey(),
+      });
+
+    case Tiles.Barbecue:
+      return new BarbecueClass({
+        x,
+        y: y - 14,
         triggerKey: getTriggerKey(),
       });
   }

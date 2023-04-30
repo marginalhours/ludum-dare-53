@@ -20,7 +20,7 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
         frames: "1..3",
         frameRate: 6,
       },
-      fired: {
+      firing: {
         frames: "3",
         frameRate: 1,
       },
@@ -50,7 +50,7 @@ export default class SpikesClass extends ControlClass {
         this.currentAnimation.reset();
       },
       onFiring: function () {
-        this.playAnimation("fired");
+        this.playAnimation("firing");
         this.currentAnimation.reset();
       },
       onReloaded: function () {

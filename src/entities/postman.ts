@@ -14,6 +14,8 @@ import SpringClass from "./spring";
 import { playGib } from "../soundManager";
 import BollardClass from "./bollard";
 import SpikeClass from "./spikes";
+import TrapdoorClass from "./trapdoor";
+import BarbecueClass from "./barbecue";
 
 let spriteSheet: any;
 
@@ -21,6 +23,7 @@ const TILE_SIZE = 32;
 const DIRECTION_LEFT = 0;
 const DIRECTION_RIGHT = 1;
 const SCARED_DURATION = 60;
+const BURNING_DURATION = 60;
 
 enum PostmanState {
   FALLING = "falling",
@@ -28,6 +31,7 @@ enum PostmanState {
   WALKING_RIGHT = "walkingRight",
   DEAD = "dead",
   SCARED = "scared",
+  BURNING = "burning",
 }
 
 kontra.on(EventType.LOADING_COMPLETE, () => {
@@ -42,6 +46,10 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
       },
       walking: {
         frames: "2..9",
+        frameRate: 12,
+      },
+      burning: {
+        frames: "30..37",
         frameRate: 12,
       },
     },
@@ -115,6 +123,13 @@ export default class PostmanSprite extends SpriteClass {
         this.dy = 0;
         this.playAnimation("falling");
         break;
+
+      case PostmanState.BURNING:
+        this.burningElapsed = 0;
+        this.playAnimation("burning");
+        if (this.direction === DIRECTION_RIGHT) {
+          this.setScale(-1, 1);
+        }
     }
 
     this.state = nextState;
@@ -191,6 +206,13 @@ export default class PostmanSprite extends SpriteClass {
       }
     }
 
+    if (this.state === PostmanState.BURNING) {
+      this.burningElapsed += 1;
+      if (this.burningElapsed > BURNING_DURATION) {
+        this.murder();
+      }
+    }
+
     const tileAtFeet = getTileAtPosition(this);
 
     if (tileAtFeet !== Tiles.Empty) {
@@ -244,6 +266,19 @@ export default class PostmanSprite extends SpriteClass {
             if (entity.isFiring() && distanceFromCentre < 10) {
               this.murder();
             }
+            break;
+
+          case TrapdoorClass:
+            if (entity.isFiring() && distanceFromCentre < 10) {
+              this.changeState(PostmanState.FALLING);
+            }
+            break;
+
+          case BarbecueClass:
+            if (entity.isFiring() && distanceFromCentre < 10) {
+              this.changeState(PostmanState.BURNING);
+            }
+            break;
         }
       }
     }

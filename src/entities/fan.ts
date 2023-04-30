@@ -16,7 +16,7 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
         frames: "0",
         frameRate: 1,
       },
-      fired: {
+      firing: {
         frames: "1..8",
         frameRate: 12,
       },
@@ -38,7 +38,7 @@ export default class FanClass extends ControlClass {
         this.playAnimation("idle");
       },
       onFiring: function () {
-        this.playAnimation("fired");
+        this.playAnimation("firing");
       },
     });
   }

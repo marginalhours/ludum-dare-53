@@ -16,7 +16,7 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
         frames: "0",
         frameRate: 1,
       },
-      fired: {
+      firing: {
         frames: "7",
         frameRate: 1,
       },
@@ -51,7 +51,7 @@ export default class TrapdoorClass extends ControlClass {
         this.currentAnimation.reset();
       },
       onFiring: function () {
-        this.playAnimation("fired");
+        this.playAnimation("firing");
         this.currentAnimation.reset();
       },
       onStarting: function () {

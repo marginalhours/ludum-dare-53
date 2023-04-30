@@ -16,7 +16,7 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
         frames: "0",
         frameRate: 1,
       },
-      fired: {
+      firing: {
         frames: "1..6",
         frameRate: 6,
       },
@@ -38,7 +38,7 @@ export default class SquasherClass extends ControlClass {
         this.playAnimation("idle");
       },
       onFiring: function () {
-        this.playAnimation("fired");
+        this.playAnimation("firing");
       },
       onStopping: function () {
         this.playAnimation("idle");
