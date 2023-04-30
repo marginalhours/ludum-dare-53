@@ -4,6 +4,8 @@ const canvas = kontra.getCanvas();
 import { SceneID } from "./constants";
 
 import tilesetSrc from "./../assets/images/tileset-new.png";
+const TILE_SIZE = 32;
+
 // Not using Kontra's asset loading here because Vite inlines the JSON.
 import tilesetJson from "./../assets/data/tileset.json";
 
@@ -68,6 +70,41 @@ const postmanFactory = (sp: Spawner, tiles: TileEngine) => {
   return [man];
 };
 
+// Loops over the top row of tiles and adds spawners where necessary.
+function createAndAddSpawners(
+  gameScene: kontra.Scene,
+  tileEngine: TileEngine,
+  postmanFactory: (sp: Spawner, tiles: TileEngine) => PostmanSprite[]
+): Spawner[] {
+  const SPAWNER_TILE_ID = 72;
+
+  const result: Spawner[] = [];
+
+  for (let x = TILE_SIZE / 2; x < canvas.width; x += TILE_SIZE) {
+    const tileId = tileEngine.tileAtLayer("world", { x, y: TILE_SIZE / 2 });
+
+    if (tileId !== SPAWNER_TILE_ID) {
+      continue;
+    }
+
+    const spawner = new Spawner({
+      spawnEvery: 120, // 60 frames is 1 second
+      elapsed: 120,
+      factory: (sp: Spawner) => postmanFactory(sp, tileEngine),
+      scene: gameScene,
+      x,
+      y: 1.5 * TILE_SIZE,
+      spawnMax: 0,
+      direction: 0.5, // TODO: Determine spawner direction based on tile ID
+    });
+
+    gameScene.add(spawner);
+    result.push(spawner);
+  }
+
+  return result;
+}
+
 const gameScene = kontra.Scene({
   id: SceneID.GAME,
   onShow() {
@@ -81,30 +118,11 @@ const gameScene = kontra.Scene({
     const tileEngine = kontra.TileEngine(tilesetJson);
     this.add(tileEngine);
 
-    const leftSpawner = new Spawner({
-      spawnEvery: 120, // 60 frames is 1 second
-      elapsed: 120,
-      factory: (sp: Spawner) => postmanFactory(sp, tileEngine),
-      scene: gameScene,
-      x: 4.5 * 32,
-      y: 1 * 32,
-      //spawnMax: 0,
-      direction: 1,
-    });
-
-    const rightSpawner = new Spawner({
-      spawnEvery: 120, // 60 frames is 1 second
-      elapsed: 120,
-      factory: (sp: Spawner) => postmanFactory(sp, tileEngine),
-      scene: gameScene,
-      x: 11.5 * 32,
-      y: 1 * 32,
-      //spawnMax: 1,
-      direction: 0,
-    });
-
-    this.add(leftSpawner);
-    this.add(rightSpawner);
+    createAndAddSpawners(
+      this as any as kontra.Scene,
+      tileEngine,
+      postmanFactory
+    );
   },
   onHide() {
     this.remove(...men);
