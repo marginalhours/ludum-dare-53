@@ -161,8 +161,11 @@ export default class PostmanSprite extends SpriteClass {
     super.update();
 
     if (this.x < 0) {
-      if (this.state === PostmanState.WALKING_LEFT && this.x < -this.width) {
-        this.x = canvas.width + this.width;
+      if (
+        this.state === PostmanState.WALKING_LEFT &&
+        this.x < -this.width / 2
+      ) {
+        this.x = canvas.width + this.width / 2;
       }
 
       return;
@@ -171,9 +174,9 @@ export default class PostmanSprite extends SpriteClass {
     if (this.x >= canvas.width) {
       if (
         this.state === PostmanState.WALKING_RIGHT &&
-        this.x >= canvas.width + this.width
+        this.x >= canvas.width + this.width / 2
       ) {
-        this.x = 0 - this.width;
+        this.x = 0 - this.width / 2;
       }
 
       return;

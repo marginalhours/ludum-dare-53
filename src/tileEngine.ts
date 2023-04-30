@@ -20,6 +20,10 @@ export enum Tiles {
   WallLeft = 15,
   WallRight = 16,
   Dog = 20,
+  RoofLeft = 89,
+  RoofRight = 90,
+  HouseLeft = 99,
+  HouseRight = 100,
 }
 
 let tileEngine: TileEngine;
