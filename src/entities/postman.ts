@@ -36,10 +36,6 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
         frames: "2..9",
         frameRate: 12,
       },
-      scared: {
-        frames: "10..11",
-        frameRate: 4,
-      },
     },
   });
 });
@@ -103,7 +99,7 @@ export default class PostmanSprite extends SpriteClass {
         this.scaredElapsed = 0;
         this.dx = 0;
         this.dy = 0;
-        this.playAnimation("scared");
+        this.playAnimation("falling");
         break;
     }
 
