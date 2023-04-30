@@ -1,6 +1,6 @@
 import { GameObject, SpriteClass, onKey } from "kontra";
 
-enum ControlState {
+export enum ControlState {
   LOADED = "loaded",
   FIRING = "firing",
   RECOVERING = "recovering",
@@ -184,6 +184,10 @@ export default class ControlClass extends SpriteClass {
   get state() {
     // proxy state to child gui object
     return this.gui.state;
+  }
+
+  isFiring() {
+    return this.state === ControlState.FIRING;
   }
 
   update() {

@@ -1,11 +1,15 @@
-import kontra from "kontra";
-const { SpriteSheet, imageAssets, SpriteClass } = kontra;
-
+import kontra, {
+  collides,
+  SpriteSheet,
+  imageAssets,
+  SpriteClass,
+} from "kontra";
 import { EventType } from "../constants";
-
 import postie from "../assets/images/postie.png";
 import { GibPool } from "./gib";
 import { Tiles, getTileAtPosition, isTileWall } from "../tileEngine";
+import { entities } from "./entityManager";
+import DogClass from "./dog";
 
 let spriteSheet: any;
 
@@ -57,6 +61,12 @@ export default class PostmanSprite extends SpriteClass {
     this.anchor.x = 0.5;
     this.anchor.y = 1;
     this.direction = props.direction == null ? DIRECTION_LEFT : props.direction;
+  }
+
+  isWalking() {
+    return [PostmanState.WALKING_LEFT, PostmanState.WALKING_RIGHT].includes(
+      this.state
+    );
   }
 
   onDown() {
@@ -194,8 +204,18 @@ export default class PostmanSprite extends SpriteClass {
       this.changeDirection();
     }
 
-    if (tileAhead === Tiles.Dog && this.scaredElapsed === 0) {
-      this.changeState(PostmanState.SCARED);
+    for (const entity of entities) {
+      if (collides(this, entity)) {
+        switch (entity.constructor) {
+          case DogClass:
+            if (this.isWalking() && entity.isFiring()) {
+              this.changeState(PostmanState.SCARED);
+            }
+
+          default:
+            return;
+        }
+      }
     }
   }
 }

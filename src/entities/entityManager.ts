@@ -4,7 +4,7 @@ import Spawner, { getDirectionFromTileId } from "./spawner";
 import DogClass from "./dog";
 import { Position } from "../interfaces";
 
-const entities = [];
+export const entities: any[] = [];
 
 export function addEntitiesToGame(gameScene: any, postmanFactory: any) {
   // Add sprites based on tiles.
