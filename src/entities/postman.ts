@@ -1,10 +1,11 @@
-import kontra, { TileEngine } from "kontra";
+import kontra from "kontra";
 const { SpriteSheet, imageAssets, SpriteClass } = kontra;
 
 import { EventType } from "../constants";
 
 import postie from "../assets/images/postie.png";
 import { GibPool } from "./gib";
+import { TileManager } from "../TileManager";
 
 let spriteSheet: any;
 
@@ -90,20 +91,7 @@ export default class PostmanSprite extends SpriteClass {
   }
 
   isCollidingWithWorld() {
-    const tileAtLeftCorner = (this.tiles as TileEngine).tileAtLayer("world", {
-      x: this.x - this.width / 2,
-      y: this.y,
-    });
-    const tileAtRightCorner = (this.tiles as TileEngine).tileAtLayer("world", {
-      x: this.x + this.width / 2,
-      y: this.y,
-    });
-
-    if (tileAtLeftCorner !== 0 || tileAtRightCorner !== 0) {
-      return true;
-    }
-
-    return false;
+    return TileManager.getInstance().isTileAtPosition(this);
   }
 
   update() {
@@ -142,7 +130,7 @@ export default class PostmanSprite extends SpriteClass {
   }
 }
 
-export const gibPostman = (man: PostmanSprite, tileEngine: TileEngine) => {
+export const gibPostman = (man: PostmanSprite) => {
   const gibCount = 48;
   return Array.from(Array(gibCount).keys())
     .map((_) => {
@@ -155,7 +143,6 @@ export const gibPostman = (man: PostmanSprite, tileEngine: TileEngine) => {
         y: man.y,
         heading: heading,
         speed: speed,
-        tiles: tileEngine,
         ttl: 150,
       });
 
