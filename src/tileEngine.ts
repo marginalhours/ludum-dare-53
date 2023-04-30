@@ -7,6 +7,7 @@ export enum Tiles {
   Empty = 0,
   WallLeft = 15,
   WallRight = 16,
+  Dog = 20,
 }
 
 let tileEngine: TileEngine;

@@ -12,12 +12,14 @@ let spriteSheet: any;
 const TILE_SIZE = 32;
 const DIRECTION_LEFT = 0;
 const DIRECTION_RIGHT = 1;
+const SCARED_DURATION = 60;
 
 enum PostmanState {
   FALLING = "falling",
   WALKING_LEFT = "walkingLeft",
   WALKING_RIGHT = "walkingRight",
   DEAD = "dead",
+  SCARED = "scared",
 }
 
 kontra.on(EventType.LOADING_COMPLETE, () => {
@@ -34,6 +36,10 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
         frames: "2..9",
         frameRate: 12,
       },
+      scared: {
+        frames: "10..11",
+        frameRate: 4,
+      },
     },
   });
 });
@@ -42,6 +48,8 @@ const canvas = kontra.getCanvas();
 
 export default class PostmanSprite extends SpriteClass {
   static WALKING_SPEED = 1;
+
+  scaredElapsed: number = 0;
 
   state: PostmanState = PostmanState.FALLING;
 
@@ -90,6 +98,13 @@ export default class PostmanSprite extends SpriteClass {
         this.playAnimation("walking");
         this.direction = DIRECTION_RIGHT;
         break;
+
+      case PostmanState.SCARED:
+        this.scaredElapsed = 0;
+        this.dx = 0;
+        this.dy = 0;
+        this.playAnimation("scared");
+        break;
     }
 
     this.state = nextState;
@@ -106,6 +121,15 @@ export default class PostmanSprite extends SpriteClass {
         this.changeState(PostmanState.WALKING_LEFT);
         break;
     }
+  }
+
+  // Continue walking in the last direction you were walking.
+  continueWalking(): void {
+    this.changeState(
+      this.direction === DIRECTION_LEFT
+        ? PostmanState.WALKING_LEFT
+        : PostmanState.WALKING_RIGHT
+    );
   }
 
   getTileAhead(): number {
@@ -146,6 +170,14 @@ export default class PostmanSprite extends SpriteClass {
       return;
     }
 
+    if (this.state === PostmanState.SCARED) {
+      this.scaredElapsed += 1;
+
+      if (this.scaredElapsed > SCARED_DURATION) {
+        this.continueWalking();
+      }
+    }
+
     const tileAtFeet = getTileAtPosition(this);
 
     if (tileAtFeet !== Tiles.Empty) {
@@ -164,6 +196,10 @@ export default class PostmanSprite extends SpriteClass {
 
     if (isTileWall(tileAhead)) {
       this.changeDirection();
+    }
+
+    if (tileAhead === Tiles.Dog && this.scaredElapsed === 0) {
+      this.changeState(PostmanState.SCARED);
     }
   }
 }
