@@ -3,7 +3,7 @@ import { EventType } from "../constants";
 const canvas = kontra.getCanvas();
 import { SceneID } from "./constants";
 
-import tilesetSrc from "./../assets/images/tileset.png";
+import tilesetSrc from "./../assets/images/tileset-new.png";
 // Not using Kontra's asset loading here because Vite inlines the JSON.
 import tilesetJson from "./../assets/data/tileset.json";
 
@@ -77,6 +77,7 @@ const gameScene = kontra.Scene({
     // Add tile engine
     (tilesetJson as any).tilesets[0].source = null;
     (tilesetJson as any).tilesets[0].image = kontra.imageAssets[tilesetSrc];
+    console.log(tilesetJson);
     const tileEngine = kontra.TileEngine(tilesetJson);
     this.add(tileEngine);
 
