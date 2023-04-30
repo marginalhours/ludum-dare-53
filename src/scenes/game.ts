@@ -3,14 +3,12 @@ import { EventType } from "../constants";
 const canvas = kontra.getCanvas();
 import { SceneID } from "./constants";
 
-const TILE_SIZE = 32;
-
 import tilesetSrc from "./../assets/images/tileset.png";
 // Not using Kontra's asset loading here because Vite inlines the JSON.
 import tilesetJson from "./../assets/data/tileset.json";
 
 import PostmanSprite, { gibPostman } from "../entities/postman";
-import Spawner from "../entities/spawner";
+import Spawner, { createAndAddSpawners } from "../entities/spawner";
 import { GibPool } from "../entities/gib";
 
 let winButton = kontra.Button({
@@ -69,41 +67,6 @@ const postmanFactory = (sp: Spawner, tiles: TileEngine) => {
   kontra.track(man);
   return [man];
 };
-
-// Loops over the top row of tiles and adds spawners where necessary.
-function createAndAddSpawners(
-  gameScene: kontra.Scene,
-  tileEngine: TileEngine,
-  postmanFactory: (sp: Spawner, tiles: TileEngine) => PostmanSprite[]
-): Spawner[] {
-  const SPAWNER_TILE_ID = 72;
-
-  const result: Spawner[] = [];
-
-  for (let x = TILE_SIZE / 2; x < canvas.width; x += TILE_SIZE) {
-    const tileId = tileEngine.tileAtLayer("world", { x, y: TILE_SIZE / 2 });
-
-    if (tileId !== SPAWNER_TILE_ID) {
-      continue;
-    }
-
-    const spawner = new Spawner({
-      spawnEvery: 120, // 60 frames is 1 second
-      elapsed: 120,
-      factory: (sp: Spawner) => postmanFactory(sp, tileEngine),
-      scene: gameScene,
-      x,
-      y: 1.5 * TILE_SIZE,
-      spawnMax: 0,
-      direction: 0.5, // TODO: Determine spawner direction based on tile ID
-    });
-
-    gameScene.add(spawner);
-    result.push(spawner);
-  }
-
-  return result;
-}
 
 const gameScene = kontra.Scene({
   id: SceneID.GAME,
