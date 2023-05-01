@@ -54,7 +54,7 @@ export default class LaserClass extends ControlClass {
     super.init({
       ...props,
       animations: spriteSheet.animations,
-      firingDuration: 200,
+      firingDuration: 100,
       reloadingDuration: 300,
       startingDuration: 0,
       stoppingDuration: 0,

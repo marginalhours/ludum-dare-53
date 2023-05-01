@@ -63,7 +63,7 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
         this._o.map((object: any) => object.update && object.update(dt));
       }
       if (this.zapperCharge < 100) {
-        this.zapperCharge += 1;
+        this.zapperCharge += 0.25;
         this.gui.setZapperCharge(this.zapperCharge);
       }
     },

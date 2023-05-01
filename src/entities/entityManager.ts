@@ -154,7 +154,7 @@ function createSpawner(
   }
 
   return new Spawner({
-    spawnEvery: 120, // 60 frames is 1 second
+    spawnEvery: 90, // 60 frames is 1 second
     elapsed: 120,
     factory: (sp: Spawner) => postmanFactory(sp),
     scene: gameScene,

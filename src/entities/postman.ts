@@ -327,8 +327,8 @@ export default class PostmanSprite extends SpriteClass {
           case SquasherClass:
             if (entity.isFiring() && distanceFromCentre < 12) {
               this.murder();
-              break;
             }
+            break;
 
           case HouseSpriteClass:
             this.deliver();
