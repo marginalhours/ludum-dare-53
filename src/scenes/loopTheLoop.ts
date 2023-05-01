@@ -1,6 +1,6 @@
 import { SceneID } from "./constants";
 import levelFactory from "./levelFactory";
 
-const loopTheLoopScene = levelFactory(SceneID.LOOP_THE_LOOP, 20);
+const loopTheLoopScene = levelFactory(SceneID.LOOP_THE_LOOP, 75);
 
 export default loopTheLoopScene;
