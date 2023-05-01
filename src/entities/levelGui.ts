@@ -1,4 +1,4 @@
-import kontra, { Grid, SpriteClass, imageAssets, Text } from "kontra";
+import kontra, { Grid, SpriteClass, imageAssets, Text, Sprite } from "kontra";
 import { EventType } from "../constants";
 
 import postieHead from "../assets/images/postie-head.png";
@@ -35,6 +35,18 @@ const guiFactory = ({ initialRemaining = 0 }) => {
     width: 200,
   });
 
+  const zapperLabelText = Text({
+    text: "ZAPPER",
+    font: "14px monospace",
+    color: "white",
+  });
+
+  const zapperBar = Sprite({
+    color: "rgba(127, 255, 127, 1.0)",
+    height: 14,
+    width: 100,
+  });
+
   const remainingRow = Grid({
     remaining: remaining,
     anchor: { x: 0.5, y: 0.5 },
@@ -56,6 +68,16 @@ const guiFactory = ({ initialRemaining = 0 }) => {
     children: [scoreLabelText, scoreText],
   });
 
+  const zapRow = Grid({
+    remaining: remaining,
+    anchor: { x: 0.5, y: 0.5 },
+    colGap: 15,
+    flow: "row",
+    justify: "center",
+    align: "center",
+    children: [zapperLabelText, zapperBar],
+  });
+
   const gui = Grid({
     x: 16,
     y: 16,
@@ -68,7 +90,7 @@ const guiFactory = ({ initialRemaining = 0 }) => {
     justify: "start",
     align: "center",
 
-    children: [remainingRow, scoreRow],
+    children: [zapRow, remainingRow, scoreRow],
 
     setRemaining(value: number) {
       remaining = value;
@@ -78,6 +100,15 @@ const guiFactory = ({ initialRemaining = 0 }) => {
     setScore(value: number) {
       scoreAmount = value;
       scoreText.text = `${scoreAmount}`;
+    },
+
+    setZapperCharge(value: number) {
+      zapperBar.width = value;
+      if (value == 100) {
+        zapperBar.color = "rgba(127, 255, 127, 1.0)";
+      } else {
+        zapperBar.color = "rgba(255, 255, 255, 1.0)";
+      }
     },
   });
 

@@ -95,7 +95,10 @@ export default class PostmanSprite extends SpriteClass {
   }
 
   onDown() {
-    this.murder();
+    if (this.parent?.canZap()) {
+      this.onZapped();
+      this.murder();
+    }
   }
 
   changeState(nextState: PostmanState) {

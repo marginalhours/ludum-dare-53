@@ -20,6 +20,9 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
         sp.scene.remove(man);
         sp.scene.onPostieEliminated();
       },
+      onZapped: () => {
+        sp.scene.onZap();
+      },
       deliver: () => {
         sp.scene.remove(man);
         sp.scene.onPostieDelivered();
@@ -40,6 +43,9 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
       // reset posties
       this.remainingPosties = totalPosties;
       // reset score
+      this.score = 0;
+      /// reset zapperCharge
+      this.zapperCharge = 100;
 
       this.add(GibPool);
 
@@ -50,6 +56,16 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
       this.gui = guiFactory({ initialRemaining: this.remainingPosties });
 
       this.add(this.gui);
+    },
+
+    update(dt: any) {
+      if (!this.hidden) {
+        this._o.map((object: any) => object.update && object.update(dt));
+      }
+      if (this.zapperCharge < 100) {
+        this.zapperCharge += 1;
+        this.gui.setZapperCharge(this.zapperCharge);
+      }
     },
 
     onPostieArrived() {
@@ -85,6 +101,14 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
       // nuke everything currently in the scene (onShow should add them back)
       this.remove(...this._o);
       resetEntities();
+    },
+
+    onZap() {
+      this.zapperCharge = 0;
+    },
+
+    canZap() {
+      return this.zapperCharge >= 100;
     },
   });
 
