@@ -21,6 +21,7 @@ export enum Tiles {
   Spring = 10,
   Bollard = 11,
   Ground = 12,
+  Laser = 13,
   WallLeft = 15,
   WallRight = 16,
   TrapDoor = 18,
@@ -48,7 +49,6 @@ export function forEachTile(
 
 export function initialiseTileEngine(sceneId: SceneID): TileEngine {
   const properties = LEVEL_DATA[sceneId] as any;
-  console.log(LEVEL_DATA, sceneId);
   properties.tilesets[0].image = imageAssets[tilesetSrc];
   tileEngine = TileEngine(properties);
   return tileEngine;

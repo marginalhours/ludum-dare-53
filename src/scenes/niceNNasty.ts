@@ -4,7 +4,7 @@ import PostmanSprite, { gibPostman } from "../entities/postman";
 import Spawner from "../entities/spawner";
 import { GibPool } from "../entities/gib";
 import { initialiseTileEngine } from "../tileEngine";
-import { addEntitiesToGame } from "../entities/entityManager";
+import { addEntitiesToScene } from "../entities/entityManager";
 
 const postmanFactory = (sp: Spawner) => {
   let man = new PostmanSprite({
@@ -31,7 +31,7 @@ const niceNNastyScene = kontra.Scene({
 
     this.add(initialiseTileEngine(this.id as SceneID));
 
-    addEntitiesToGame(this, postmanFactory);
+    addEntitiesToScene(this, postmanFactory);
   },
 
   onHide() {
