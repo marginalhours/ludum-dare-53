@@ -8,6 +8,7 @@ import BollardClass from "../entities/bollard";
 import TrapdoorClass from "../entities/trapdoor";
 import SpikesClass from "../entities/spikes";
 import BarbecueClass from "../entities/barbecue";
+import LaserClass from "../entities/laser";
 
 const canvas = kontra.getCanvas();
 
@@ -62,6 +63,12 @@ const playgroundScene = kontra.Scene({
       triggerKey: "d",
     });
 
+    const laser = new LaserClass({
+      x: canvas.width / 2 + 120,
+      y: canvas.height / 2 + 100,
+      triggerKey: "f",
+    });
+
     this.add(spring);
     this.add(fan);
     this.add(dog);
@@ -70,6 +77,7 @@ const playgroundScene = kontra.Scene({
     this.add(trapdoor);
     this.add(spikes);
     this.add(barbecue);
+    this.add(laser);
 
     // Make sure to track controls via kontra.track() to get mouse events
     kontra.track(spring);
@@ -80,6 +88,7 @@ const playgroundScene = kontra.Scene({
     kontra.track(trapdoor);
     kontra.track(spikes);
     kontra.track(barbecue);
+    kontra.track(laser);
   },
 });
 

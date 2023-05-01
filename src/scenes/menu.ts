@@ -1,9 +1,11 @@
-import kontra from "kontra";
+import kontra, { Sprite } from "kontra";
 import { SceneID } from "./constants";
 import { EventType } from "../constants";
 
-const { ButtonClass } = kontra;
+const { ButtonClass, imageAssets } = kontra;
 const canvas = kontra.getCanvas();
+
+import title from "../assets/images/title-screen.png";
 
 const noop = () => {};
 
@@ -33,7 +35,7 @@ class HoverableButton extends ButtonClass {
 
 let startButton = new HoverableButton({
   text: {
-    color: "white",
+    color: "black",
     font: "16px monospace",
     background: "#f00",
     text: "start game",
@@ -41,7 +43,7 @@ let startButton = new HoverableButton({
   },
   anchor: { x: 0.5, y: 0.5 },
   x: canvas.width / 2,
-  y: canvas.height / 2,
+  y: 640,
   onDown() {
     (this.y as number) += 1;
   },
@@ -59,11 +61,11 @@ let startButton = new HoverableButton({
     this.draw();
 
     if (this.pressed) {
-      this.textNode.color = "#aaa";
+      this.textNode.color = "#000";
     } else if (this.focused || this.hovered) {
-      this.textNode.color = "#ccc";
+      this.textNode.color = "#000";
     } else {
-      this.textNode.color = "#fff";
+      this.textNode.color = "#000";
     }
   },
 });
@@ -73,13 +75,19 @@ kontra.track(startButton);
 const menuScene = kontra.Scene({
   id: SceneID.MENU,
   onShow() {
+    const titleScreen = Sprite({
+      x: 0,
+      y: 0,
+      image: imageAssets[title],
+    });
     startButton.focus();
+
+    this.add(titleScreen);
+    this.add(startButton);
   },
   focus() {
     startButton.focus();
   },
 });
-
-menuScene.add(startButton);
 
 export default menuScene;
