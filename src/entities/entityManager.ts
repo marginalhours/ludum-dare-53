@@ -54,6 +54,8 @@ export function removeEntity(gameScene: any, entity: any) {
 export function resetEntities() {
   entities.map((entity) => kontra.untrack(entity));
   entities = [];
+  // also reset keybindings
+  triggerKeyIndex = 0;
 }
 
 export function getEntities() {

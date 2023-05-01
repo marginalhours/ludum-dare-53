@@ -93,7 +93,9 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
 
     checkFinished() {
       if (this.activePosties <= 0 && this.remainingPosties <= 0) {
-        kontra.emit(EventType.CHANGE_SCENE, SceneID.LEVEL_SELECT);
+        setTimeout(() => {
+          kontra.emit(EventType.CHANGE_SCENE, SceneID.LEVEL_SELECT);
+        }, 2000);
       }
     },
 
