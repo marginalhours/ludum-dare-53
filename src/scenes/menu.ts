@@ -43,7 +43,7 @@ let startButton = new HoverableButton({
   },
   anchor: { x: 0.5, y: 0.5 },
   x: canvas.width / 2,
-  y: 640,
+  y: 660,
   onDown() {
     (this.y as number) += 1;
   },
