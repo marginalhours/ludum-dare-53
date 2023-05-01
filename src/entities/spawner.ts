@@ -15,6 +15,11 @@ export default class Spawner extends GameObjectClass {
     this.spawnMax = spawnMax || 0;
     this.direction = direction == null ? 0.5 : direction;
   }
+
+  stop() {
+    this.spawnMax = this.#spawned;
+  }
+
   update() {
     if (this.spawnMax !== 0 && this.#spawned >= this.spawnMax) {
       return;

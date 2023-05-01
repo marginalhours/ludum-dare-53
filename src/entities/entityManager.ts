@@ -27,6 +27,10 @@ export function addEntitiesToScene(gameScene: any, postmanFactory: any) {
     const entity = createEntity(position, tile, gameScene, postmanFactory);
 
     if (entity != null) {
+      if (entity.constructor === Spawner) {
+        gameScene.spawners = [...(gameScene.spawners || []), entity];
+      }
+
       gameScene.add(entity);
       track(entity);
       entities.push(entity);
