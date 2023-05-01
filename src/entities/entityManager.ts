@@ -9,6 +9,7 @@ import TrapdoorClass from "./trapdoor";
 import SpikesClass from "./spikes";
 import BarbecueClass from "./barbecue";
 import FanClass from "./fan";
+import SquasherClass from "./squasher";
 
 const TRIGGER_KEYS = "qwertyuiopasdfghjklzxcvbnm".split("");
 let triggerKeyIndex = 0;
@@ -88,6 +89,13 @@ function createEntity(
       return new FanClass({
         x,
         y: y - 16,
+        triggerKey: getTriggerKey(),
+      });
+
+    case Tiles.Squasher:
+      return new SquasherClass({
+        x,
+        y: y,
         triggerKey: getTriggerKey(),
       });
   }

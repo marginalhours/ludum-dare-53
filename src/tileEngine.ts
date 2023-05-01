@@ -1,6 +1,6 @@
 import { imageAssets, TileEngine } from "kontra";
 import { Position } from "./interfaces";
-import tilesetJson from "./assets/data/tileset.json";
+import tilesetJson from "./assets/data/LaserOverload.json";
 import tilesetSrc from "./assets/images/tileset-new.png";
 
 export const TILE_SIZE = 32;

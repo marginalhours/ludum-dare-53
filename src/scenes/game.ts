@@ -1,44 +1,10 @@
 import kontra from "kontra";
-import { EventType } from "../constants";
-const canvas = kontra.getCanvas();
 import { SceneID } from "./constants";
 import PostmanSprite, { gibPostman } from "../entities/postman";
 import Spawner from "../entities/spawner";
 import { GibPool } from "../entities/gib";
 import { initialiseTileEngine } from "../tileEngine";
 import { addEntitiesToGame } from "../entities/entityManager";
-
-let winButton = kontra.Button({
-  text: {
-    color: "red",
-    font: "16px monospace",
-    text: "win game",
-    anchor: { x: 0.5, y: 0.5 },
-  },
-  anchor: { x: 0.5, y: 0.5 },
-  x: canvas.width / 2,
-  y: canvas.height / 2,
-  onDown() {
-    (this.y as number) += 1;
-  },
-  onUp() {
-    (this.y as number) -= 1;
-    setTimeout(() => kontra.emit(EventType.CHANGE_SCENE, SceneID.MENU), 50);
-  },
-  render() {
-    this.draw();
-
-    if (this.pressed) {
-      this.textNode.color = "#aaa";
-    } else if (this.focused || this.hovered) {
-      this.textNode.color = "#ccc";
-    } else {
-      this.textNode.color = "#fff";
-    }
-  },
-});
-
-kontra.track(winButton);
 
 let men: PostmanSprite[] = [];
 
@@ -70,8 +36,6 @@ const gameScene = kontra.Scene({
   onShow() {
     this.add(GibPool);
 
-    winButton.focus();
-
     this.add(initialiseTileEngine());
 
     addEntitiesToGame(this, postmanFactory);
@@ -79,13 +43,8 @@ const gameScene = kontra.Scene({
 
   onHide() {
     this.remove(...men);
-  },
-
-  focus() {
-    winButton.focus();
+    men = [];
   },
 });
-
-gameScene.add(winButton);
 
 export default gameScene;
