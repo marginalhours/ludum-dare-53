@@ -1,5 +1,15 @@
 import { Howl } from "howler";
 
+let mute = false;
+
+export function isMuted(): boolean {
+  return mute;
+}
+
+export function toggleMute(): boolean {
+  return (mute = mute === false);
+}
+
 // Filenames in the assets/audio folder
 // Use MP3 where possible; it's got better browser compatibility
 export enum SoundType {
@@ -29,7 +39,7 @@ export const registerSound = (path: string, sound: Howl) => {
 };
 
 export const playSound = (sound: SoundType) => {
-  audioAssets[sound].play();
+  mute === false && audioAssets[sound].play();
 };
 
 export function playDog(): void {

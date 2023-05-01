@@ -7,6 +7,7 @@ const canvas = kontra.getCanvas();
 
 import title from "../assets/images/title-screen.png";
 import HoverableButton from "../entities/hoverableButton";
+import { toggleMute } from "../soundManager";
 
 const menuButtonFactory = (text: string, onUp: any) => {
   return new HoverableButton({
@@ -47,6 +48,10 @@ const menuButtonFactory = (text: string, onUp: any) => {
   });
 };
 
+const muteButton = menuButtonFactory("MUTE", () => {
+  muteButton.text = toggleMute() ? "UNMUTE" : "MUTE AGAIN";
+});
+
 const startButton = menuButtonFactory("START GAME", () => {
   setTimeout(
     () => kontra.emit(EventType.CHANGE_SCENE, SceneID.LEVEL_SELECT),
@@ -65,6 +70,7 @@ const creditsButton = menuButtonFactory("CREDITS", () => {
   setTimeout(() => kontra.emit(EventType.CHANGE_SCENE, SceneID.CREDITS), 50);
 });
 
+kontra.track(muteButton);
 kontra.track(startButton);
 kontra.track(instructionsButton);
 
@@ -85,7 +91,7 @@ const menuScene = kontra.Scene({
       rowGap: 15,
       justify: "center",
 
-      children: [startButton, instructionsButton, creditsButton],
+      children: [startButton, instructionsButton, creditsButton, muteButton],
     });
 
     this.add(titleScreen);
