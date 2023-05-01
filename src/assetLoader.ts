@@ -24,6 +24,7 @@ import spikes3Src from "./assets/sounds/spikes3.mp3";
 import trapdoor1Src from "./assets/sounds/trapdoor.mp3";
 import fan1Src from "./assets/sounds/fan1.mp3";
 import fan2Src from "./assets/sounds/fan2.mp3";
+import music1Src from "./assets/sounds/music1.mp3";
 
 // Image imports
 import tilesetSrc from "./assets/images/tileset.png";
@@ -49,6 +50,7 @@ import creditsSrc from "./assets/images/credits.png";
 import completeSrc from "./assets/images/levelComplete.png";
 
 // Audio
+// name, file, isMusic
 const audioFiles = [
   [SoundType.Boing, boingSrc],
   [SoundType.Dog1, dog1Src],
@@ -66,6 +68,7 @@ const audioFiles = [
   [SoundType.Trapdoor1, trapdoor1Src],
   [SoundType.Fan1, fan1Src],
   [SoundType.Fan2, fan2Src],
+  [SoundType.Music1, music1Src, true],
 ];
 
 // Images
@@ -117,16 +120,16 @@ kontra.on(EventType._KONTRA_ASSET_LOADED, loadingProgressCallback);
 
 export const startAssetLoading = () => {
   // Audio file loading via howl
-  audioFiles.map(([name, source]) => {
+  audioFiles.map(([name, source, isMusic]) => {
     registerSound(
-      name,
+      name as string,
       new Howl({
-        src: [source],
+        src: [source as string],
         autoplay: false,
-        loop: false,
+        loop: (isMusic as boolean) || false,
         rate: 1.0,
-        volume: 0.25,
-        onload: () => loadingProgressCallback("sound", source),
+        volume: (isMusic as boolean) ? 0.1 : 0.25,
+        onload: () => loadingProgressCallback("sound", source as string),
       })
     );
   });

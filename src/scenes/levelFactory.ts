@@ -7,6 +7,7 @@ import { initialiseTileEngine } from "../tileEngine";
 import { addEntitiesToScene, resetEntities } from "../entities/entityManager";
 import guiFactory from "../entities/levelGui";
 import { EventType } from "../constants";
+import { playGameplayMusic, stopGameplayMusic } from "../soundManager";
 
 const levelFactory = (sceneId: SceneID, totalPosties: number) => {
   const postmanFactory = (sp: Spawner) => {
@@ -40,6 +41,7 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
     score: 0,
 
     onShow() {
+      playGameplayMusic();
       // reset posties
       this.remainingPosties = totalPosties;
       // reset score
@@ -107,6 +109,7 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
     },
 
     onHide() {
+      stopGameplayMusic();
       // nuke everything currently in the scene (onShow should add them back)
       this.remove(...this._o);
       resetEntities();

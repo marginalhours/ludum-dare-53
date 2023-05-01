@@ -29,6 +29,7 @@ export enum SoundType {
   Trapdoor1 = "trapdoor1.mp3",
   Fan1 = "fan1.mp3",
   Fan2 = "fan2.mp3",
+  Music1 = "music1.mp3",
 }
 
 const audioAssets: Record<string, Howl> = {};
@@ -40,6 +41,10 @@ export const registerSound = (path: string, sound: Howl) => {
 
 export const playSound = (sound: SoundType) => {
   mute === false && audioAssets[sound].play();
+};
+
+export const stopSound = (sound: SoundType) => {
+  audioAssets[sound].stop();
 };
 
 export function playDog(): void {
@@ -64,6 +69,14 @@ export function playTrapdoor(): void {
 
 export function playFan(): void {
   playSound(getRandom(SoundType.Fan1, SoundType.Fan2));
+}
+
+export function playGameplayMusic(): void {
+  playSound(SoundType.Music1);
+}
+
+export function stopGameplayMusic(): void {
+  stopSound(SoundType.Music1);
 }
 
 function getRandom<T>(...items: T[]): T {
