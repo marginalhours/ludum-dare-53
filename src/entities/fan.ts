@@ -3,6 +3,7 @@ import ControlClass from "./control";
 import { EventType } from "../constants";
 
 import fan from "../assets/images/fan-2.png";
+import { playFan } from "../soundManager";
 
 let spriteSheet: any;
 
@@ -38,6 +39,7 @@ export default class FanClass extends ControlClass {
         this.playAnimation("idle");
       },
       onFiring: function () {
+        playFan();
         this.playAnimation("firing");
       },
     });

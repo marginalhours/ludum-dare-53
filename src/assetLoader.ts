@@ -22,6 +22,8 @@ import spikes1Src from "./assets/sounds/spikes1.mp3";
 import spikes2Src from "./assets/sounds/spikes2.mp3";
 import spikes3Src from "./assets/sounds/spikes3.mp3";
 import trapdoor1Src from "./assets/sounds/trapdoor.mp3";
+import fan1Src from "./assets/sounds/fan1.mp3";
+import fan2Src from "./assets/sounds/fan2.mp3";
 
 // Image imports
 import tilesetSrc from "./assets/images/tileset.png";
@@ -60,6 +62,8 @@ const audioFiles = [
   [SoundType.Spikes2, spikes2Src],
   [SoundType.Spikes3, spikes3Src],
   [SoundType.Trapdoor1, trapdoor1Src],
+  [SoundType.Fan1, fan1Src],
+  [SoundType.Fan2, fan2Src],
 ];
 
 // Images

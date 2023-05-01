@@ -17,6 +17,8 @@ export enum SoundType {
   Spikes2 = "spikes2.mp3",
   Spikes3 = "spikes3.mp3",
   Trapdoor1 = "trapdoor1.mp3",
+  Fan1 = "fan1.mp3",
+  Fan2 = "fan2.mp3",
 }
 
 const audioAssets: Record<string, Howl> = {};
@@ -48,6 +50,10 @@ export function playSpikes(): void {
 
 export function playTrapdoor(): void {
   playSound(SoundType.Trapdoor1);
+}
+
+export function playFan(): void {
+  playSound(getRandom(SoundType.Fan1, SoundType.Fan2));
 }
 
 function getRandom<T>(...items: T[]): T {
