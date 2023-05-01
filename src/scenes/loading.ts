@@ -48,7 +48,7 @@ function getFirstSceneId(): SceneID {
     "?laser-overload": SceneID.LASER_OVERLOAD,
     "?loop-the-loop": SceneID.LOOP_THE_LOOP,
     "?nice-n-easy": SceneID.NICE_N_EASY,
-    "?nice-n-nasty": SceneID.NICE_N_NASTY,
+    "?laser-focused": SceneID.LASER_FOCUSED,
     "?shish-kebob": SceneID.SHISH_KEBOB,
   };
 

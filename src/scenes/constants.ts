@@ -6,6 +6,6 @@ export enum SceneID {
   LASER_OVERLOAD = "laserOverload",
   LOOP_THE_LOOP = "loopTheLoop",
   NICE_N_EASY = "niceNEasy",
-  NICE_N_NASTY = "niceNNasty",
+  LASER_FOCUSED = "laserFocused",
   SHISH_KEBOB = "shishKebob",
 }

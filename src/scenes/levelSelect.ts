@@ -79,7 +79,7 @@ const levelSelectScene = kontra.Scene({
 
     const levelButtonData = [
       { name: "NICE 'N' EASY", sceneId: SceneID.NICE_N_EASY },
-      { name: "NICE 'N' NASTY", sceneId: SceneID.NICE_N_NASTY },
+      { name: "LASER FOCUSED", sceneId: SceneID.LASER_FOCUSED },
       { name: "SHISH KEBOB", sceneId: SceneID.SHISH_KEBOB },
       { name: "LASER OVERLOAD", sceneId: SceneID.LASER_OVERLOAD },
       { name: "LOOP THE LOOP", sceneId: SceneID.LOOP_THE_LOOP },

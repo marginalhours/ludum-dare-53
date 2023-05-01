@@ -6,7 +6,7 @@ import playgroundScene from "./playground";
 import laserOverloadScene from "./laserOverload";
 import loopTheLoopScene from "./loopTheLoop";
 import niceNEasyScene from "./niceNEasy";
-import niceNNastyScene from "./niceNNasty";
+import laserFocusedScene from "./laserFocused";
 import shishKebobScene from "./shishKebobScene";
 import levelSelectScene from "./levelSelect";
 
@@ -19,7 +19,7 @@ const sceneArray: Scene[] = [
   laserOverloadScene,
   loopTheLoopScene,
   niceNEasyScene,
-  niceNNastyScene,
+  laserFocusedScene,
   shishKebobScene,
 ];
 
