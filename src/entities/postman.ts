@@ -18,6 +18,7 @@ import TrapdoorClass from "./trapdoor";
 import BarbecueClass from "./barbecue";
 import FanClass from "./fan";
 import { LaserBeamClass } from "./laser";
+import SquasherClass from "./squasher";
 
 let spriteSheet: any;
 
@@ -26,8 +27,8 @@ const DIRECTION_LEFT = 0;
 const DIRECTION_RIGHT = 1;
 const SCARED_DURATION = 60;
 const BURNING_DURATION = 60;
-const SPRING_SPEED = -4;
-const FAN_SPEED = -4;
+const SPRING_SPEED = -12;
+const FAN_SPEED = -12;
 
 enum PostmanState {
   FALLING = "falling",
@@ -302,6 +303,12 @@ export default class PostmanSprite extends SpriteClass {
           case LaserBeamClass:
             this.murder();
             break;
+
+          case SquasherClass:
+            if (entity.isFiring() && distanceFromCentre < 12) {
+              this.murder();
+              break;
+            }
         }
       }
     }
