@@ -80,10 +80,10 @@ class ControlGUI extends SpriteClass {
 
     switch (p.state) {
       case ControlState.RELOADED:
-        this.context.fillStyle = "rgba(0, 0, 0, 1.0)";
+        this.context.fillStyle = "#3a1f1c";
         break;
       default:
-        this.context.fillStyle = "rgba(160, 160, 160, 1.0)";
+        this.context.fillStyle = "#7e4933";
         offset = 2;
         break;
     }
@@ -227,6 +227,6 @@ export default class ControlClass extends SpriteClass {
   }
 
   isFiring() {
-    return this.state != ControlState.RELOADED;
+    return [ControlState.RELOADED, ControlState.RELOADING].includes(this.state);
   }
 }
