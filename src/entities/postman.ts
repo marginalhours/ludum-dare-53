@@ -44,7 +44,7 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
     frameHeight: 32,
     animations: {
       falling: {
-        frames: "20..25",
+        frames: "30..35",
         frameRate: 12,
       },
       walking: {
@@ -52,7 +52,7 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
         frameRate: 12,
       },
       burning: {
-        frames: "30..37",
+        frames: "20..27",
         frameRate: 12,
       },
     },
@@ -99,6 +99,7 @@ export default class PostmanSprite extends SpriteClass {
         this.ddy = 0.1;
         this.dx = 0;
         this.playAnimation("falling");
+        this.setScale(1, 1);
         break;
 
       case PostmanState.WALKING_LEFT:
