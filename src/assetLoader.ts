@@ -18,6 +18,9 @@ import gib3Src from "./assets/sounds/gib3.mp3";
 import laser1Src from "./assets/sounds/laser1.mp3";
 import laser2Src from "./assets/sounds/laser2.mp3";
 import laser3Src from "./assets/sounds/laser3.mp3";
+import spikes1Src from "./assets/sounds/spikes1.mp3";
+import spikes2Src from "./assets/sounds/spikes2.mp3";
+import spikes3Src from "./assets/sounds/spikes3.mp3";
 
 // Image imports
 import tilesetSrc from "./assets/images/tileset.png";
@@ -51,6 +54,9 @@ const audioFiles = [
   [SoundType.Laser1, laser1Src],
   [SoundType.Laser2, laser2Src],
   [SoundType.Laser3, laser3Src],
+  [SoundType.Spikes1, spikes1Src],
+  [SoundType.Spikes2, spikes2Src],
+  [SoundType.Spikes3, spikes3Src],
 ];
 
 // Images

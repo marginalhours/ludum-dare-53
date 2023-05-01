@@ -3,6 +3,7 @@ import ControlClass from "./control";
 import { EventType } from "../constants";
 
 import spikes from "../assets/images/spikes.png";
+import { playSpikes } from "../soundManager";
 
 let spriteSheet: any;
 
@@ -50,6 +51,7 @@ export default class SpikesClass extends ControlClass {
         this.currentAnimation.reset();
       },
       onFiring: function () {
+        playSpikes();
         this.playAnimation("firing");
         this.currentAnimation.reset();
       },
