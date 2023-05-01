@@ -7,7 +7,7 @@ const canvas = kontra.getCanvas();
 
 import title from "../assets/images/title-screen.png";
 import HoverableButton from "../entities/hoverableButton";
-import { playTitleMusic, stopTitleMusic, toggleMute } from "../soundManager";
+import { playTitleMusic, toggleMute } from "../soundManager";
 
 const menuButtonFactory = (text: string, onUp: any) => {
   return new HoverableButton({
@@ -101,9 +101,6 @@ const menuScene = kontra.Scene({
   },
   focus() {
     startButton.focus();
-  },
-  onHide() {
-    stopTitleMusic();
   },
 });
 

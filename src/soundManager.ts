@@ -6,7 +6,7 @@ export function isMuted(): boolean {
   return mute;
 }
 
-const musicThatIsPlaying: any[] = [];
+let currentMusic: SoundType | null;
 
 export function toggleMute(): boolean {
   let mutedNow = (mute = mute === false);
@@ -83,20 +83,38 @@ export function playFan(): void {
 }
 
 export function playGameplayMusic(): void {
+  if (currentMusic === SoundType.Music1) {
+    return;
+  }
+
+  if (currentMusic) {
+    stopSound(currentMusic);
+  }
+
+  currentMusic = SoundType.Music1;
   playSound(SoundType.Music1);
 }
 
 export function stopGameplayMusic(): void {
+  currentMusic = null;
   stopSound(SoundType.Music1);
 }
 
 export function playTitleMusic(): void {
-  musicThatIsPlaying.push(SoundType.Music3);
+  if (currentMusic === SoundType.Music3) {
+    return;
+  }
+
+  if (currentMusic) {
+    stopSound(currentMusic);
+  }
+
+  currentMusic = SoundType.Music3;
   playSound(SoundType.Music3);
 }
 
 export function stopTitleMusic(): void {
-  musicThatIsPlaying.push(SoundType.Music3);
+  currentMusic = null;
   stopSound(SoundType.Music3);
 }
 
