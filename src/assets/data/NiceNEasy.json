@@ -29,7 +29,7 @@
             12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12],
          "height":24,
          "id":1,
-         "name":"Tile Layer 1",
+         "name":"world",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -45,8 +45,7 @@
  "tileheight":32,
  "tilesets":[
         {
-         "firstgid":1,
-         "source":"tileset-new.tsx"
+         "firstgid":1
         }],
  "tilewidth":32,
  "type":"map",
