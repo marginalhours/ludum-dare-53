@@ -3,6 +3,7 @@ import ControlClass from "./control";
 import { EventType } from "../constants";
 
 import trapdoor from "../assets/images/trapdoor.png";
+import { playTrapdoor } from "../soundManager";
 
 let spriteSheet: any;
 
@@ -55,10 +56,12 @@ export default class TrapdoorClass extends ControlClass {
         this.currentAnimation.reset();
       },
       onStarting: function () {
+        playTrapdoor();
         this.playAnimation("starting");
         this.currentAnimation.reset();
       },
       onStopping: function () {
+        playTrapdoor();
         this.playAnimation("stopping");
         this.currentAnimation.reset();
       },

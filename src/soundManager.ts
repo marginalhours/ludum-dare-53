@@ -13,6 +13,10 @@ export enum SoundType {
   Laser1 = "laser1.mp3",
   Laser2 = "laser2.mp3",
   Laser3 = "laser3.mp3",
+  Spikes1 = "spikes1.mp3",
+  Spikes2 = "spikes2.mp3",
+  Spikes3 = "spikes3.mp3",
+  Trapdoor1 = "trapdoor1.mp3",
 }
 
 const audioAssets: Record<string, Howl> = {};
@@ -36,6 +40,14 @@ export function playGib(): void {
 
 export function playLaser(): void {
   playSound(getRandom(SoundType.Laser1, SoundType.Laser2, SoundType.Laser3));
+}
+
+export function playSpikes(): void {
+  playSound(getRandom(SoundType.Spikes1, SoundType.Spikes2, SoundType.Spikes3));
+}
+
+export function playTrapdoor(): void {
+  playSound(SoundType.Trapdoor1);
 }
 
 function getRandom<T>(...items: T[]): T {
