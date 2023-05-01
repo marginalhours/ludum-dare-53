@@ -1,6 +1,6 @@
 import { imageAssets, TileEngine } from "kontra";
 import { Position } from "./interfaces";
-import tilesetSrc from "./assets/images/tileset-new.png";
+import tilesetSrc from "./assets/images/tileset.png";
 
 import { SceneID } from "./scenes/constants";
 import { LEVEL_DATA } from "./levels";

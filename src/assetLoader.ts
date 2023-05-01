@@ -20,7 +20,7 @@ import laser2Src from "./assets/sounds/laser2.mp3";
 import laser3Src from "./assets/sounds/laser3.mp3";
 
 // Image imports
-import tilesetSrc from "./assets/images/tileset-new.png";
+import tilesetSrc from "./assets/images/tileset.png";
 import postieSrc from "./assets/images/postie.png";
 import goodPostieSrc from "./assets/images/good-postie.png";
 import spikesSrc from "./assets/images/spikes.png";
