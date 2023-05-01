@@ -241,6 +241,14 @@ export default class PostmanSprite extends SpriteClass {
       this.changeState(PostmanState.FALLING);
     }
 
+    // Slightly hacky check for head touching spikedowns.
+    const headY = this.y - this.height;
+    const headTile = getTileAtPosition({ x: this.x, y: headY });
+    if (headTile === Tiles.SpikesDown && headY % TILE_SIZE < TILE_SIZE / 2) {
+      this.murder();
+      return;
+    }
+
     const tileAhead = this.getTileAhead();
 
     if (isTileWall(tileAhead)) {

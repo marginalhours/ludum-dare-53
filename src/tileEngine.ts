@@ -22,6 +22,7 @@ export enum Tiles {
   Bollard = 11,
   Ground = 12,
   Laser = 13,
+  SpikesDown = 14,
   WallLeft = 15,
   WallRight = 16,
   TrapDoor = 18,
