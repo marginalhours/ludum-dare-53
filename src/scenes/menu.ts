@@ -36,9 +36,9 @@ class HoverableButton extends ButtonClass {
 let startButton = new HoverableButton({
   text: {
     color: "black",
-    font: "16px monospace",
+    font: "20px monospace",
     background: "#f00",
-    text: "start game",
+    text: "START GAME",
     anchor: { x: 0.5, y: 0.5 },
   },
   anchor: { x: 0.5, y: 0.5 },

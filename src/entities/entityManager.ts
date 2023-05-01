@@ -153,6 +153,8 @@ function createSpawner(
     return null;
   }
 
+  console.log(direction);
+
   return new Spawner({
     spawnEvery: 120, // 60 frames is 1 second
     elapsed: 120,
