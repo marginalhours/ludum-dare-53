@@ -81,10 +81,16 @@ export default class PostmanSprite extends SpriteClass {
     this.direction = props.direction == null ? DIRECTION_LEFT : props.direction;
   }
 
+  isWalkingLeft() {
+    return this.state === PostmanState.WALKING_LEFT;
+  }
+
+  isWalkingRight() {
+    return this.state === PostmanState.WALKING_RIGHT;
+  }
+
   isWalking() {
-    return [PostmanState.WALKING_LEFT, PostmanState.WALKING_RIGHT].includes(
-      this.state
-    );
+    return this.isWalkingLeft() || this.isWalkingRight();
   }
 
   onDown() {
@@ -249,13 +255,15 @@ export default class PostmanSprite extends SpriteClass {
 
         switch (entity.constructor) {
           case BollardClass:
+            const bollardX = entity.x + entity.width / 2;
             if (
-              this.isWalking() &&
-              distanceFromCentre < 10 &&
-              entity.isFiring()
+              entity.isFiring() &&
+              ((this.isWalkingRight() && this.x < bollardX) ||
+                (this.isWalkingLeft() && this.x > bollardX))
             ) {
-              this.murder();
+              this.changeDirection();
             }
+
             break;
 
           case DogClass:
