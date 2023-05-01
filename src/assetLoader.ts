@@ -25,6 +25,7 @@ import trapdoor1Src from "./assets/sounds/trapdoor.mp3";
 import fan1Src from "./assets/sounds/fan1.mp3";
 import fan2Src from "./assets/sounds/fan2.mp3";
 import music1Src from "./assets/sounds/music1.mp3";
+import music3Src from "./assets/sounds/music3.mp3";
 
 // Image imports
 import tilesetSrc from "./assets/images/tileset.png";
@@ -69,6 +70,7 @@ const audioFiles = [
   [SoundType.Fan1, fan1Src],
   [SoundType.Fan2, fan2Src],
   [SoundType.Music1, music1Src, true],
+  [SoundType.Music3, music3Src, true],
 ];
 
 // Images

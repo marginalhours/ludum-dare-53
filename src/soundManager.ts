@@ -6,8 +6,18 @@ export function isMuted(): boolean {
   return mute;
 }
 
+const musicThatIsPlaying: any[] = [];
+
 export function toggleMute(): boolean {
-  return (mute = mute === false);
+  let mutedNow = (mute = mute === false);
+
+  if (mutedNow) {
+    Howler.volume(0.0);
+  } else {
+    Howler.volume(1.0);
+  }
+
+  return mutedNow;
 }
 
 // Filenames in the assets/audio folder
@@ -30,6 +40,7 @@ export enum SoundType {
   Fan1 = "fan1.mp3",
   Fan2 = "fan2.mp3",
   Music1 = "music1.mp3",
+  Music3 = "music3.mp3",
 }
 
 const audioAssets: Record<string, Howl> = {};
@@ -40,7 +51,7 @@ export const registerSound = (path: string, sound: Howl) => {
 };
 
 export const playSound = (sound: SoundType) => {
-  mute === false && audioAssets[sound].play();
+  audioAssets[sound].play();
 };
 
 export const stopSound = (sound: SoundType) => {
@@ -77,6 +88,16 @@ export function playGameplayMusic(): void {
 
 export function stopGameplayMusic(): void {
   stopSound(SoundType.Music1);
+}
+
+export function playTitleMusic(): void {
+  musicThatIsPlaying.push(SoundType.Music3);
+  playSound(SoundType.Music3);
+}
+
+export function stopTitleMusic(): void {
+  musicThatIsPlaying.push(SoundType.Music3);
+  stopSound(SoundType.Music3);
 }
 
 function getRandom<T>(...items: T[]): T {

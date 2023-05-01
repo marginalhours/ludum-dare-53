@@ -3,6 +3,7 @@ import ControlClass from "./control";
 import { EventType } from "../constants";
 
 import bollard from "../assets/images/bollard.png";
+import { playTrapdoor } from "../soundManager";
 
 let spriteSheet: any;
 
@@ -50,10 +51,12 @@ export default class BollardClass extends ControlClass {
         this.currentAnimation.reset();
       },
       onStarting: function () {
+        playTrapdoor();
         this.playAnimation("starting");
         this.currentAnimation.reset();
       },
       onStopping: function () {
+        playTrapdoor();
         this.playAnimation("stopping");
         this.currentAnimation.reset();
       },

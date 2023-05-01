@@ -3,6 +3,7 @@ import ControlClass from "./control";
 import { EventType } from "../constants";
 
 import squasher from "../assets/images/squasher.png";
+import { playTrapdoor } from "../soundManager";
 
 let spriteSheet: any;
 
@@ -40,7 +41,11 @@ export default class SquasherClass extends ControlClass {
       onFiring: function () {
         this.playAnimation("firing");
       },
+      onStarting: function () {
+        playTrapdoor();
+      },
       onStopping: function () {
+        playTrapdoor();
         this.playAnimation("idle");
       },
     });
