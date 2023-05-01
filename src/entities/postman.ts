@@ -258,6 +258,11 @@ export default class PostmanSprite extends SpriteClass {
 
           case DogClass:
             if (this.isWalking() && entity.isFiring()) {
+              if (entity.x > this.x) {
+                this.x -= 5 * Math.random();
+              } else {
+                this.x += 5 * Math.random();
+              }
               this.changeState(PostmanState.SCARED);
             }
             break;

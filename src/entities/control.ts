@@ -227,6 +227,8 @@ export default class ControlClass extends SpriteClass {
   }
 
   isFiring() {
-    return [ControlState.RELOADED, ControlState.RELOADING].includes(this.state);
+    return ![ControlState.RELOADED, ControlState.RELOADING].includes(
+      this.state
+    );
   }
 }
