@@ -98,9 +98,7 @@ const levelSelectScene = kontra.Scene({
       y: 595,
       anchor: { x: 0.5, y: 0.5 },
       rowGap: 15,
-
-      // center the children
-      justify: "center",
+      justify: "start",
 
       children: levelButtons,
     });
