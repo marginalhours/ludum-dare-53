@@ -4,7 +4,7 @@ import PostmanSprite, { gibPostman } from "../entities/postman";
 import Spawner from "../entities/spawner";
 import { GibPool } from "../entities/gib";
 import { initialiseTileEngine } from "../tileEngine";
-import { addEntitiesToScene } from "../entities/entityManager";
+import { addEntitiesToScene, resetEntities } from "../entities/entityManager";
 import guiFactory from "../entities/levelGui";
 import { EventType } from "../constants";
 
@@ -30,8 +30,6 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
     return [man];
   };
 
-  let men: PostmanSprite[] = [];
-
   const scene = kontra.Scene({
     id: sceneId,
     remainingPosties: totalPosties,
@@ -39,6 +37,10 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
     score: 0,
 
     onShow() {
+      // reset posties
+      this.remainingPosties = totalPosties;
+      // reset score
+
       this.add(GibPool);
 
       this.add(initialiseTileEngine(this.id as SceneID));
@@ -80,8 +82,9 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
     },
 
     onHide() {
-      this.remove(...men);
-      men = [];
+      // nuke everything currently in the scene (onShow should add them back)
+      this.remove(...this._o);
+      resetEntities();
     },
   });
 
