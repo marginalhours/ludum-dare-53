@@ -19,6 +19,7 @@ import BarbecueClass from "./barbecue";
 import FanClass from "./fan";
 import { LaserBeamClass } from "./laser";
 import SquasherClass from "./squasher";
+import HouseSpriteClass from "./house";
 
 let spriteSheet: any;
 
@@ -325,6 +326,10 @@ export default class PostmanSprite extends SpriteClass {
               this.murder();
               break;
             }
+
+          case HouseSpriteClass:
+            this.deliver();
+            break;
         }
       }
     }

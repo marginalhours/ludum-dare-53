@@ -20,6 +20,10 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
         sp.scene.remove(man);
         sp.scene.onPostieEliminated();
       },
+      deliver: () => {
+        sp.scene.remove(man);
+        sp.scene.onPostieDelivered();
+      },
     });
     sp.scene.onPostieArrived();
     kontra.track(man);

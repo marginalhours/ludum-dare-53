@@ -25,6 +25,7 @@ export enum Tiles {
   SpikesDown = 14,
   WallLeft = 15,
   WallRight = 16,
+  Door = 17,
   TrapDoor = 18,
   Dog = 20,
   Barbecue = 32,

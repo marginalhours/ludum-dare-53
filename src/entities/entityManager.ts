@@ -11,6 +11,7 @@ import BarbecueClass from "./barbecue";
 import FanClass from "./fan";
 import SquasherClass from "./squasher";
 import LaserClass from "./laser";
+import HouseSpriteClass from "./house";
 
 const TRIGGER_KEYS = "1234567890qwertyuiopasdfghjklzxcvbnm".split("");
 let triggerKeyIndex = 0;
@@ -130,6 +131,12 @@ function createEntity(
         x,
         y: y - 14,
         triggerKey: getTriggerKey(),
+      });
+
+    case Tiles.Door:
+      return new HouseSpriteClass({
+        x,
+        y: y - 32,
       });
   }
 }
