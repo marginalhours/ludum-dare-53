@@ -5,7 +5,7 @@ import { EventType } from "../constants";
 const { imageAssets } = kontra;
 const canvas = kontra.getCanvas();
 
-import instructions from "../assets/images/instructions.png";
+import credits from "../assets/images/credits.png";
 import HoverableButton from "../entities/hoverableButton";
 
 let backButton = new HoverableButton({
@@ -37,28 +37,28 @@ let backButton = new HoverableButton({
     this.draw();
 
     if (this.pressed) {
-      this.textNode.color = "#000";
+      this.textNode.color = "#aaa";
     } else if (this.focused || this.hovered) {
-      this.textNode.color = "#333";
+      this.textNode.color = "#f00";
     } else {
-      this.textNode.color = "#000";
+      this.textNode.color = "#fff";
     }
   },
 });
 
 kontra.track(backButton);
 
-const instructionsScene = kontra.Scene({
-  id: SceneID.INSTRUCTIONS,
+const creditsScene = kontra.Scene({
+  id: SceneID.CREDITS,
   onShow() {
-    const instructionsBackground = Sprite({
+    const creditsBackground = Sprite({
       x: 0,
       y: 0,
-      image: imageAssets[instructions],
+      image: imageAssets[credits],
     });
     backButton.focus();
 
-    this.add(instructionsBackground);
+    this.add(creditsBackground);
     this.add(backButton);
   },
   focus() {
@@ -66,4 +66,4 @@ const instructionsScene = kontra.Scene({
   },
 });
 
-export default instructionsScene;
+export default creditsScene;

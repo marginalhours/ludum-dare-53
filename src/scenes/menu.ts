@@ -61,6 +61,10 @@ const instructionsButton = menuButtonFactory("INSTRUCTIONS", () => {
   );
 });
 
+const creditsButton = menuButtonFactory("CREDITS", () => {
+  setTimeout(() => kontra.emit(EventType.CHANGE_SCENE, SceneID.CREDITS), 50);
+});
+
 kontra.track(startButton);
 kontra.track(instructionsButton);
 
@@ -81,7 +85,7 @@ const menuScene = kontra.Scene({
       rowGap: 15,
       justify: "center",
 
-      children: [startButton, instructionsButton],
+      children: [startButton, instructionsButton, creditsButton],
     });
 
     this.add(titleScreen);

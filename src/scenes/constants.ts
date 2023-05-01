@@ -3,6 +3,8 @@ export enum SceneID {
   MENU = "menu",
   INSTRUCTIONS = "instructions",
   LEVEL_SELECT = "levelSelect",
+  LEVEL_COMPLETE = "levelComplete",
+  CREDITS = "credits",
   PLAYGROUND = "playground",
   LASER_OVERLOAD = "laserOverload",
   LOOP_THE_LOOP = "loopTheLoop",

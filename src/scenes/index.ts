@@ -10,13 +10,17 @@ import laserFocusedScene from "./laserFocused";
 import shishKebobScene from "./shishKebobScene";
 import levelSelectScene from "./levelSelect";
 import instructionsScene from "./instructions";
+import creditsScene from "./credits";
+import completeScene from "./complete";
 
 // Array of all the scenes
 const sceneArray: Scene[] = [
   menuScene,
   playgroundScene,
   levelSelectScene,
+  completeScene,
   instructionsScene,
+  creditsScene,
   // levels (x5)
   laserOverloadScene,
   loopTheLoopScene,

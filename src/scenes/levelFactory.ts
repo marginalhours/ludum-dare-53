@@ -94,8 +94,15 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
     checkFinished() {
       if (this.activePosties <= 0 && this.remainingPosties <= 0) {
         setTimeout(() => {
-          kontra.emit(EventType.CHANGE_SCENE, SceneID.LEVEL_SELECT);
-        }, 2000);
+          // Horrible window score globals
+
+          //@ts-ignore
+          window.__LAST_LEVEL_SCORE = this.score;
+          //@ts-ignore
+          window.__LAST_LEVEL_FRACTION = this.score / (100 * totalPosties);
+
+          kontra.emit(EventType.CHANGE_SCENE, SceneID.LEVEL_COMPLETE);
+        }, 1500);
       }
     },
 

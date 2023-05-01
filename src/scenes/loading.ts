@@ -44,6 +44,7 @@ kontra.on(EventType.LOADING_COMPLETE, () => {
 function getFirstSceneId(): SceneID {
   const map: { [key: string]: SceneID } = {
     "?level-select": SceneID.LEVEL_SELECT,
+    "?level-complete": SceneID.LEVEL_COMPLETE,
     "?playground": SceneID.PLAYGROUND,
     "?laser-overload": SceneID.LASER_OVERLOAD,
     "?loop-the-loop": SceneID.LOOP_THE_LOOP,

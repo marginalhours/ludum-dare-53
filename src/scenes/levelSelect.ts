@@ -121,9 +121,9 @@ const levelSelectScene = kontra.Scene({
     const levelButtonData = [
       { name: "NICE 'N' EASY", sceneId: SceneID.NICE_N_EASY },
       { name: "LASER FOCUSED", sceneId: SceneID.LASER_FOCUSED },
-      { name: "SHISH KEBOB", sceneId: SceneID.SHISH_KEBOB },
-      { name: "LASER OVERLOAD", sceneId: SceneID.LASER_OVERLOAD },
       { name: "LOOP THE LOOP", sceneId: SceneID.LOOP_THE_LOOP },
+      { name: "LASER OVERLOAD", sceneId: SceneID.LASER_OVERLOAD },
+      { name: "SHISH KEBOB", sceneId: SceneID.SHISH_KEBOB },
     ];
 
     const levelButtons = levelButtonData.map(({ name, sceneId }, index) =>
