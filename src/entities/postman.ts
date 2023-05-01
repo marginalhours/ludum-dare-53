@@ -11,7 +11,7 @@ import { Tiles, getTileAtPosition, isTileWall } from "../tileEngine";
 import { getEntities } from "./entityManager";
 import DogClass from "./dog";
 import SpringClass from "./spring";
-import { playGib } from "../soundManager";
+import { playDelivered, playGib } from "../soundManager";
 import BollardClass from "./bollard";
 import SpikeClass from "./spikes";
 import TrapdoorClass from "./trapdoor";
@@ -331,6 +331,7 @@ export default class PostmanSprite extends SpriteClass {
             break;
 
           case HouseSpriteClass:
+            playDelivered();
             this.deliver();
             break;
         }
