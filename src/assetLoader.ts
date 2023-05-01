@@ -36,6 +36,7 @@ import trapdoorSrc from "./assets/images/trapdoor.png";
 import teleporterSrc from "./assets/images/teleporter.png";
 import frameSrc from "./assets/images/frame.png";
 import titleSrc from "./assets/images/title-screen.png";
+import levelSelectSrc from "./assets/images/level-select.png";
 
 // Audio
 const audioFiles = [
@@ -69,6 +70,7 @@ const imageFiles = [
   teleporterSrc,
   frameSrc,
   titleSrc,
+  levelSelectSrc,
 ];
 
 // Percentage tracking

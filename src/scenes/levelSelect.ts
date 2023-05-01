@@ -1,6 +1,7 @@
-import kontra, { Grid } from "kontra";
+import kontra, { Grid, imageAssets, Sprite } from "kontra";
 import { SceneID } from "./constants";
 import { EventType } from "../constants";
+import backgroundSrc from "./../assets/images/level-select.png";
 
 const { ButtonClass } = kontra;
 const canvas = kontra.getCanvas();
@@ -36,7 +37,7 @@ const levelSelectButtonFactory = ({ levelName, levelId, index }: any) => {
     text: {
       color: "#fff",
       font: "20px monospace",
-      text: `1.${index + 1} ${levelName}`,
+      text: `1-${index + 1} ${levelName}`,
     },
     onDown() {
       (this.y as number) += 1;
@@ -59,7 +60,7 @@ const levelSelectButtonFactory = ({ levelName, levelId, index }: any) => {
       } else if (this.focused || this.hovered) {
         this.textNode.color = "#f00";
       } else {
-        this.textNode.color = "#fff";
+        this.textNode.color = "#000";
       }
     },
   });
@@ -68,12 +69,20 @@ const levelSelectButtonFactory = ({ levelName, levelId, index }: any) => {
 const levelSelectScene = kontra.Scene({
   id: SceneID.LEVEL_SELECT,
   onShow() {
+    const background = Sprite({
+      width: canvas.width,
+      height: canvas.height,
+      image: imageAssets[backgroundSrc],
+    });
+
+    this.add(background);
+
     const levelButtonData = [
-      { name: "laser overload", sceneId: SceneID.LASER_OVERLOAD },
-      { name: "loop the loop", sceneId: SceneID.LOOP_THE_LOOP },
-      { name: "nice'n'easy", sceneId: SceneID.NICE_N_EASY },
-      { name: "nice'n'nasty", sceneId: SceneID.NICE_N_NASTY },
-      { name: "shish kebob", sceneId: SceneID.SHISH_KEBOB },
+      { name: "NICE 'N' EASY", sceneId: SceneID.NICE_N_EASY },
+      { name: "NICE 'N' NASTY", sceneId: SceneID.NICE_N_NASTY },
+      { name: "SHISH KEBOB", sceneId: SceneID.SHISH_KEBOB },
+      { name: "LASER OVERLOAD", sceneId: SceneID.LASER_OVERLOAD },
+      { name: "LOOP THE LOOP", sceneId: SceneID.LOOP_THE_LOOP },
     ];
 
     const levelButtons = levelButtonData.map(({ name, sceneId }, index) =>
@@ -86,10 +95,8 @@ const levelSelectScene = kontra.Scene({
 
     let menu = Grid({
       x: canvas.width / 2,
-      y: canvas.height / 2,
+      y: 595,
       anchor: { x: 0.5, y: 0.5 },
-
-      // add 15 pixels of space between each row
       rowGap: 15,
 
       // center the children
