@@ -14,7 +14,7 @@ const levelFactory = (sceneId: SceneID, totalPosties: number) => {
       x: sp.x,
       y: sp.y,
       ddy: 0.1,
-      direction: () => sp.getRandomDirection(),
+      direction: sp.getRandomDirection(),
       murder: () => {
         gibPostman(man);
         sp.scene.remove(man);
