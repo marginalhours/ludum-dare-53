@@ -34,12 +34,25 @@ kontra.on(EventType.LOADING_PROGRESS, (fraction: number) => {
 });
 
 kontra.on(EventType.LOADING_COMPLETE, () => {
-  setTimeout(() => kontra.emit(EventType.CHANGE_SCENE, SceneID.MENU), 500);
+  setTimeout(() => kontra.emit(EventType.CHANGE_SCENE, getFirstSceneId()), 500);
   // setTimeout(
   //   () => kontra.emit(EventType.CHANGE_SCENE, SceneID.PLAYGROUND),
   //   500
   // );
 });
+
+function getFirstSceneId(): SceneID {
+  const map: { [key: string]: SceneID } = {
+    "?playground": SceneID.PLAYGROUND,
+    "?laser-overload": SceneID.LASER_OVERLOAD,
+    "?loop-the-loop": SceneID.LOOP_THE_LOOP,
+    "?nice-n-easy": SceneID.NICE_N_EASY,
+    "?nice-n-nasty": SceneID.NICE_N_NASTY,
+    "?shish-kebob": SceneID.SHISH_KEBOB,
+  };
+
+  return map[location.search] || SceneID.MENU;
+}
 
 const loadingScene = kontra.Scene({
   id: SceneID.LOADING,
