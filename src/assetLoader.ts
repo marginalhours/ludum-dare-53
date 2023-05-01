@@ -20,7 +20,7 @@ import laser2Src from "./assets/sounds/laser2.mp3";
 import laser3Src from "./assets/sounds/laser3.mp3";
 
 // Image imports
-import tilesetSrc from "./assets/images/tileset-new.png";
+import tilesetSrc from "./assets/images/tileset.png";
 import postieSrc from "./assets/images/postie.png";
 import goodPostieSrc from "./assets/images/good-postie.png";
 import spikesSrc from "./assets/images/spikes.png";
@@ -37,6 +37,7 @@ import teleporterSrc from "./assets/images/teleporter.png";
 import frameSrc from "./assets/images/frame.png";
 import titleSrc from "./assets/images/title-screen.png";
 import postieHeadSrc from "./assets/images/postie-head.png";
+import levelSelectSrc from "./assets/images/level-select.png";
 
 // Audio
 const audioFiles = [
@@ -71,6 +72,7 @@ const imageFiles = [
   frameSrc,
   titleSrc,
   postieHeadSrc,
+  levelSelectSrc,
 ];
 
 // Percentage tracking

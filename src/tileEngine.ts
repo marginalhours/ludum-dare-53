@@ -1,6 +1,6 @@
 import { imageAssets, TileEngine } from "kontra";
 import { Position } from "./interfaces";
-import tilesetSrc from "./assets/images/tileset-new.png";
+import tilesetSrc from "./assets/images/tileset.png";
 
 import { SceneID } from "./scenes/constants";
 import { LEVEL_DATA } from "./levels";
@@ -22,6 +22,7 @@ export enum Tiles {
   Bollard = 11,
   Ground = 12,
   Laser = 13,
+  SpikesDown = 14,
   WallLeft = 15,
   WallRight = 16,
   TrapDoor = 18,

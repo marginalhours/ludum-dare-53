@@ -81,10 +81,16 @@ export default class PostmanSprite extends SpriteClass {
     this.direction = props.direction == null ? DIRECTION_LEFT : props.direction;
   }
 
+  isWalkingLeft() {
+    return this.state === PostmanState.WALKING_LEFT;
+  }
+
+  isWalkingRight() {
+    return this.state === PostmanState.WALKING_RIGHT;
+  }
+
   isWalking() {
-    return [PostmanState.WALKING_LEFT, PostmanState.WALKING_RIGHT].includes(
-      this.state
-    );
+    return this.isWalkingLeft() || this.isWalkingRight();
   }
 
   onDown() {
@@ -235,6 +241,14 @@ export default class PostmanSprite extends SpriteClass {
       this.changeState(PostmanState.FALLING);
     }
 
+    // Slightly hacky check for head touching spikedowns.
+    const headY = this.y - this.height;
+    const headTile = getTileAtPosition({ x: this.x, y: headY });
+    if (headTile === Tiles.SpikesDown && headY % TILE_SIZE < TILE_SIZE / 2) {
+      this.murder();
+      return;
+    }
+
     const tileAhead = this.getTileAhead();
 
     if (isTileWall(tileAhead)) {
@@ -249,13 +263,15 @@ export default class PostmanSprite extends SpriteClass {
 
         switch (entity.constructor) {
           case BollardClass:
+            const bollardX = entity.x + entity.width / 2;
             if (
-              this.isWalking() &&
-              distanceFromCentre < 10 &&
-              entity.isFiring()
+              entity.isFiring() &&
+              ((this.isWalkingRight() && this.x < bollardX) ||
+                (this.isWalkingLeft() && this.x > bollardX))
             ) {
-              this.murder();
+              this.changeDirection();
             }
+
             break;
 
           case DogClass:
