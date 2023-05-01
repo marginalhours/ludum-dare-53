@@ -29,6 +29,13 @@ export default class Spawner extends GameObjectClass {
       this.#spawned += entities.length;
     }
   }
+
+  getRandomDirection(): number {
+    if ([0, 1].includes(this.direction)) {
+      return this.direction;
+    }
+    return Math.random() < this.direction ? 0 : 1;
+  }
 }
 
 export function getDirectionFromTileId(tileId: number): number {

@@ -6,21 +6,12 @@ import { GibPool } from "../entities/gib";
 import { initialiseTileEngine } from "../tileEngine";
 import { addEntitiesToGame } from "../entities/entityManager";
 
-let men: PostmanSprite[] = [];
-
-const getRandomDirection = (spawnerDirection: number): number => {
-  if ([0, 1].includes(spawnerDirection)) {
-    return spawnerDirection;
-  }
-  return Math.random() < spawnerDirection ? 0 : 1;
-};
-
 const postmanFactory = (sp: Spawner) => {
   let man = new PostmanSprite({
     x: sp.x,
     y: sp.y,
     ddy: 0.1,
-    direction: getRandomDirection(sp.direction),
+    direction: () => sp.getRandomDirection(),
     murder: () => {
       gibPostman(man);
       sp.scene.remove(man);
@@ -30,13 +21,15 @@ const postmanFactory = (sp: Spawner) => {
   return [man];
 };
 
-const gameScene = kontra.Scene({
-  id: SceneID.GAME,
+let men: PostmanSprite[] = [];
+
+const loopTheLoopScene = kontra.Scene({
+  id: SceneID.LOOP_THE_LOOP,
 
   onShow() {
     this.add(GibPool);
 
-    this.add(initialiseTileEngine());
+    this.add(initialiseTileEngine(this.id as SceneID));
 
     addEntitiesToGame(this, postmanFactory);
   },
@@ -47,4 +40,4 @@ const gameScene = kontra.Scene({
   },
 });
 
-export default gameScene;
+export default loopTheLoopScene;

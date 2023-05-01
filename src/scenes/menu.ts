@@ -49,7 +49,16 @@ let startButton = new HoverableButton({
   },
   onUp() {
     (this.y as number) -= 1;
-    setTimeout(() => kontra.emit(EventType.CHANGE_SCENE, SceneID.GAME), 50);
+    const levelScenes = [
+      SceneID.LASER_OVERLOAD,
+      SceneID.LOOP_THE_LOOP,
+      SceneID.NICE_N_EASY,
+      SceneID.NICE_N_NASTY,
+      SceneID.SHISH_KEBOB,
+    ];
+    const levelID = levelScenes[Math.floor(Math.random() * levelScenes.length)];
+
+    setTimeout(() => kontra.emit(EventType.CHANGE_SCENE, levelID), 50);
   },
   onOver() {
     canvas.style.cursor = "pointer";

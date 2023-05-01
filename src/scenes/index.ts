@@ -1,11 +1,25 @@
 import { Scene } from "kontra";
 
 import menuScene from "./menu";
-import gameScene from "./game";
 import playgroundScene from "./playground";
 
+import laserOverloadScene from "./laserOverload";
+import loopTheLoopScene from "./loopTheLoop";
+import niceNEasyScene from "./niceNEasy";
+import niceNNastyScene from "./niceNNasty";
+import shishKebobScene from "./shishKebobScene";
+
 // Array of all the scenes
-const sceneArray: Scene[] = [menuScene, gameScene, playgroundScene];
+const sceneArray: Scene[] = [
+  menuScene,
+  playgroundScene,
+  // levels (x5)
+  laserOverloadScene,
+  loopTheLoopScene,
+  niceNEasyScene,
+  niceNNastyScene,
+  shishKebobScene,
+];
 
 // Dictionary of scene ID to Scene
 export const allScenes: Record<string, Scene> = sceneArray.reduce(

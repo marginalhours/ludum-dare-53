@@ -1,7 +1,9 @@
 import { imageAssets, TileEngine } from "kontra";
 import { Position } from "./interfaces";
-import tilesetJson from "./assets/data/LaserOverload.json";
 import tilesetSrc from "./assets/images/tileset-new.png";
+
+import { SceneID } from "./scenes/constants";
+import { LEVEL_DATA } from "./levels";
 
 export const TILE_SIZE = 32;
 
@@ -44,10 +46,11 @@ export function forEachTile(
   }
 }
 
-export function initialiseTileEngine(): TileEngine {
-  const properties = tilesetJson as any;
+export function initialiseTileEngine(sceneId: SceneID): TileEngine {
+  const properties = LEVEL_DATA[sceneId] as any;
+  console.log(LEVEL_DATA, sceneId);
   properties.tilesets[0].image = imageAssets[tilesetSrc];
-  tileEngine = TileEngine(tilesetJson);
+  tileEngine = TileEngine(properties);
   return tileEngine;
 }
 
