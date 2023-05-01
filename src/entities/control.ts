@@ -1,4 +1,4 @@
-import { GameObject, SpriteClass, imageAssets, onKey } from "kontra";
+import { GameObject, SpriteClass, imageAssets, onKey, track } from "kontra";
 import frameSrc from "../assets/images/frame.png";
 
 export enum ControlState {
@@ -113,6 +113,25 @@ class ControlGUI extends SpriteClass {
   }
 }
 
+class ControlClickZone extends SpriteClass {
+  static SIZE = 44;
+  width = ControlClickZone.SIZE;
+  height = ControlClickZone.SIZE;
+  control: ControlClass;
+
+  constructor(properties: any) {
+    super(properties);
+    this.control = properties.control;
+    this.x = (this.control.width - this.width) / 2;
+    this.y = (this.control.height - this.height) / 2;
+    track(this); // @Tom: is this a terrible idea? :D    console.log(this.control);
+  }
+
+  onDown() {
+    this.control.onDown();
+  }
+}
+
 // Base class for everything the player can interact with via keyboard / tap
 // Callbacks are:
 // onReloaded
@@ -170,6 +189,8 @@ export default class ControlClass extends SpriteClass {
 
     this.state = ControlState.RELOADED;
 
+    const clickZone = new ControlClickZone({ control: this });
+    this.addChild(clickZone);
     this.addChild(this.gui);
 
     onKey(triggerKey, () => {
