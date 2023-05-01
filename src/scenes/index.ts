@@ -8,11 +8,13 @@ import loopTheLoopScene from "./loopTheLoop";
 import niceNEasyScene from "./niceNEasy";
 import niceNNastyScene from "./niceNNasty";
 import shishKebobScene from "./shishKebobScene";
+import levelSelectScene from "./levelSelect";
 
 // Array of all the scenes
 const sceneArray: Scene[] = [
   menuScene,
   playgroundScene,
+  levelSelectScene,
   // levels (x5)
   laserOverloadScene,
   loopTheLoopScene,
