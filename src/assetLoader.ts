@@ -42,6 +42,7 @@ import frameSrc from "./assets/images/frame.png";
 import titleSrc from "./assets/images/title-screen.png";
 import postieHeadSrc from "./assets/images/postie-head.png";
 import levelSelectSrc from "./assets/images/level-select.png";
+import instructionsSrc from "./assets/images/instructions.png";
 
 // Audio
 const audioFiles = [
@@ -81,6 +82,7 @@ const imageFiles = [
   titleSrc,
   postieHeadSrc,
   levelSelectSrc,
+  instructionsSrc,
 ];
 
 // Percentage tracking

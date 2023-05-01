@@ -1,80 +1,68 @@
-import kontra, { Sprite } from "kontra";
+import kontra, { Grid, Sprite } from "kontra";
 import { SceneID } from "./constants";
 import { EventType } from "../constants";
 
-const { ButtonClass, imageAssets } = kontra;
+const { imageAssets } = kontra;
 const canvas = kontra.getCanvas();
 
 import title from "../assets/images/title-screen.png";
+import HoverableButton from "../entities/hoverableButton";
 
-const noop = () => {};
-
-interface HoverableButtonProps {
-  onOver: () => void;
-  onOut: () => void;
-  props: any;
-}
-
-class HoverableButton extends ButtonClass {
-  init({ onOver, onOut, ...props }: HoverableButtonProps) {
-    this._oo = onOver || noop;
-    this._ooo = onOut || noop;
-    super.init(props);
-  }
-
-  onOver() {
-    this._oo();
-    super.onOver();
-  }
-
-  onOut() {
-    this._ooo();
-    super.onOut();
-  }
-}
-
-let startButton = new HoverableButton({
-  text: {
-    color: "black",
-    font: "20px monospace",
-    background: "#f00",
-    text: "START GAME",
+const menuButtonFactory = (text: string, onUp: any) => {
+  return new HoverableButton({
+    text: {
+      color: "black",
+      font: "20px monospace",
+      background: "#f00",
+      text: text,
+      anchor: { x: 0.55, y: 0.5 },
+    },
     anchor: { x: 0.5, y: 0.5 },
-  },
-  anchor: { x: 0.5, y: 0.5 },
-  x: canvas.width / 2,
-  y: 660,
-  onDown() {
-    (this.y as number) += 1;
-  },
-  onUp() {
-    (this.y as number) -= 1;
+    x: canvas.width / 2,
+    onDown() {
+      (this.y as number) += 1;
+    },
+    onUp() {
+      (this.y as number) -= 1;
 
-    setTimeout(
-      () => kontra.emit(EventType.CHANGE_SCENE, SceneID.LEVEL_SELECT),
-      50
-    );
-  },
-  onOver() {
-    canvas.style.cursor = "pointer";
-  },
-  onOut() {
-    canvas.style.cursor = "auto";
-  },
-  render() {
-    this.draw();
+      onUp();
+    },
+    onOver() {
+      canvas.style.cursor = "pointer";
+    },
+    onOut() {
+      canvas.style.cursor = "auto";
+    },
+    render() {
+      this.draw();
 
-    if (this.pressed) {
-      this.textNode.color = "#000";
-    } else if (this.focused || this.hovered) {
-      this.textNode.color = "#000";
-    } else {
-      this.textNode.color = "#000";
-    }
-  },
+      if (this.pressed) {
+        this.textNode.color = "#000";
+      } else if (this.focused || this.hovered) {
+        this.textNode.color = "#333";
+      } else {
+        this.textNode.color = "#000";
+      }
+    },
+  });
+};
+
+const startButton = menuButtonFactory("START GAME", () => {
+  setTimeout(
+    () => kontra.emit(EventType.CHANGE_SCENE, SceneID.LEVEL_SELECT),
+    50
+  );
+});
+
+const instructionsButton = menuButtonFactory("INSTRUCTIONS", () => {
+  setTimeout(
+    () => kontra.emit(EventType.CHANGE_SCENE, SceneID.INSTRUCTIONS),
+    50
+  );
 });
 
 kontra.track(startButton);
+kontra.track(instructionsButton);
 
 const menuScene = kontra.Scene({
   id: SceneID.MENU,
@@ -86,8 +74,18 @@ const menuScene = kontra.Scene({
     });
     startButton.focus();
 
+    let startMenu = Grid({
+      x: canvas.width / 2,
+      y: 660,
+      anchor: { x: 0.5, y: 0.5 },
+      rowGap: 15,
+      justify: "center",
+
+      children: [startButton, instructionsButton],
+    });
+
     this.add(titleScreen);
-    this.add(startButton);
+    this.add(startMenu);
   },
   focus() {
     startButton.focus();

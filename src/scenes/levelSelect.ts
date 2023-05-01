@@ -2,9 +2,50 @@ import kontra, { Grid, imageAssets, Sprite } from "kontra";
 import { SceneID } from "./constants";
 import { EventType } from "../constants";
 import backgroundSrc from "./../assets/images/level-select.png";
+import HoverableButton from "../entities/hoverableButton";
 
 const { ButtonClass } = kontra;
 const canvas = kontra.getCanvas();
+
+let backButton = new HoverableButton({
+  text: {
+    color: "black",
+    font: "20px monospace",
+    background: "#f00",
+    text: "🠔 BACK",
+    anchor: { x: 0.55, y: 0.5 },
+  },
+  anchor: { x: 0.5, y: 0.5 },
+  x: canvas.width / 2,
+  y: 720,
+  onDown() {
+    (this.y as number) += 1;
+  },
+  onUp() {
+    (this.y as number) -= 1;
+
+    setTimeout(() => kontra.emit(EventType.CHANGE_SCENE, SceneID.MENU), 50);
+  },
+  onOver() {
+    canvas.style.cursor = "pointer";
+  },
+  onOut() {
+    canvas.style.cursor = "auto";
+  },
+  render() {
+    this.draw();
+
+    if (this.pressed) {
+      this.textNode.color = "#000";
+    } else if (this.focused || this.hovered) {
+      this.textNode.color = "#333";
+    } else {
+      this.textNode.color = "#000";
+    }
+  },
+});
+
+kontra.track(backButton);
 
 const noop = () => {};
 
@@ -105,6 +146,7 @@ const levelSelectScene = kontra.Scene({
 
     levelButtons.map((button) => kontra.track(button));
     this.add(menu);
+    this.add(backButton);
   },
 });
 
