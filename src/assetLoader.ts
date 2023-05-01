@@ -15,6 +15,9 @@ import dog3Src from "./assets/sounds/dog3.mp3";
 import gib1Src from "./assets/sounds/gib1.mp3";
 import gib2Src from "./assets/sounds/gib2.mp3";
 import gib3Src from "./assets/sounds/gib3.mp3";
+import laser1Src from "./assets/sounds/laser1.mp3";
+import laser2Src from "./assets/sounds/laser2.mp3";
+import laser3Src from "./assets/sounds/laser3.mp3";
 
 // Image imports
 import tilesetSrc from "./assets/images/tileset-new.png";
@@ -43,6 +46,9 @@ const audioFiles = [
   [SoundType.Gib1, gib1Src],
   [SoundType.Gib2, gib2Src],
   [SoundType.Gib3, gib3Src],
+  [SoundType.Laser1, laser1Src],
+  [SoundType.Laser2, laser2Src],
+  [SoundType.Laser3, laser3Src],
 ];
 
 // Images

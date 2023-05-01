@@ -1,4 +1,4 @@
-import { track } from "kontra";
+import kontra, { track, untrack } from "kontra";
 import { TILE_SIZE, Tiles, forEachTile } from "../tileEngine";
 import Spawner, { getDirectionFromTileId } from "./spawner";
 import DogClass from "./dog";
@@ -10,17 +10,18 @@ import SpikesClass from "./spikes";
 import BarbecueClass from "./barbecue";
 import FanClass from "./fan";
 import SquasherClass from "./squasher";
+import LaserClass from "./laser";
 
-const TRIGGER_KEYS = "qwertyuiopasdfghjklzxcvbnm".split("");
+const TRIGGER_KEYS = "1234567890qwertyuiopasdfghjklzxcvbnm".split("");
 let triggerKeyIndex = 0;
 
 function getTriggerKey() {
   return TRIGGER_KEYS[triggerKeyIndex++ % TRIGGER_KEYS.length];
 }
 
-export const entities: any[] = [];
+export let entities: any[] = [];
 
-export function addEntitiesToGame(gameScene: any, postmanFactory: any) {
+export function addEntitiesToScene(gameScene: any, postmanFactory: any) {
   // Add sprites based on tiles.
   forEachTile((position, tile) => {
     const entity = createEntity(position, tile, gameScene, postmanFactory);
@@ -31,6 +32,27 @@ export function addEntitiesToGame(gameScene: any, postmanFactory: any) {
       entities.push(entity);
     }
   });
+}
+
+export function addEntity(gameScene: any, entity: any) {
+  gameScene.add(entity);
+  track(entity);
+  entities.push(entity);
+}
+
+export function removeEntity(gameScene: any, entity: any) {
+  gameScene.remove(entity);
+  untrack(entity);
+  entities = entities.filter((x) => x !== entity);
+}
+
+export function resetEntities() {
+  entities.map((entity) => kontra.untrack(entity));
+  entities = [];
+}
+
+export function getEntities() {
+  return entities;
 }
 
 function createEntity(
@@ -96,6 +118,13 @@ function createEntity(
       return new SquasherClass({
         x,
         y: y,
+        triggerKey: getTriggerKey(),
+      });
+
+    case Tiles.Laser:
+      return new LaserClass({
+        x,
+        y: y - 14,
         triggerKey: getTriggerKey(),
       });
   }
